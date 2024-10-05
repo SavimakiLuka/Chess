@@ -8,3 +8,14 @@ C:\Users\gr289438\Desktop\Python, C#\testi\WindowsFormsApp1\WindowsFormsApp1\bin
 C:\Users\gr289438\Desktop\Python, C#\testi\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\gr289438\Desktop\Python, C#\testi\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
 C:\Users\gr289438\Desktop\Python, C#\testi\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Pelilauta.resources
+C:\Users\lukas\Desktop\C#\Chess\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\lukas\Desktop\C#\Chess\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+C:\Users\lukas\Desktop\C#\Chess\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\lukas\Desktop\C#\Chess\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Shakki.csproj.AssemblyReference.cache
+C:\Users\lukas\Desktop\C#\Chess\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Pelilauta.resources
+C:\Users\lukas\Desktop\C#\Chess\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\lukas\Desktop\C#\Chess\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Shakki.csproj.GenerateResource.cache
+C:\Users\lukas\Desktop\C#\Chess\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Shakki.csproj.CoreCompileInputs.cache
+C:\Users\lukas\Desktop\C#\Chess\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+C:\Users\lukas\Desktop\C#\Chess\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\lukas\Desktop\C#\Chess\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Options.resources

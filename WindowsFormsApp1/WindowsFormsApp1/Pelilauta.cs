@@ -14,26 +14,34 @@ namespace WindowsFormsApp1
 {
     public partial class Pelilauta : Form
     {
+        
         public Label ruutu;
-        public string[,] ruudut;
-        public int leveys = 10;
-        public int korkeus = 60;
-        public int rivit;
-        public int sarakkeet;
-        int ruudukon_varit = 0;
-        int size = 50;
+
+        //Timer
         int cellSize = 50;
-        int vali = 10;
         int timerSize = 80;
         int timerHight = 20;
         int timerWidht = 110;
-        bool a = false;
-        int b = 0;
+        int remainingTime;
+        
+        //Gameboard
         int riviMaara = 8;
         int torniMaara = 8;
-        public Label[,] gridLabel;
         public double time = 0;
         Peli peli = new Peli();
+        Nappulat Nappulat = new Nappulat();
+
+        //Pieces
+        int numberOfPieces;
+
+        private static Label[,] gridlabel;
+
+        public static Label[,] gridLabel
+        {
+            get { return gridlabel; }
+            set { gridlabel = value; }
+        }
+
         public Pelilauta()
         {
             InitializeComponent();
@@ -44,13 +52,14 @@ namespace WindowsFormsApp1
         {
             Ruudukko(this);
             Timer_CreateTimer_ShowTheTimer();
+            PlaceThePieces();
         }
         public void Ruudukko(Form form)
         {
             int luku = 0;
             int yOffset = 35;
 
-            gridLabel = new Label[riviMaara, torniMaara];
+            gridlabel = new Label[riviMaara, torniMaara];
 
             for (int i = 0; i < riviMaara; i++)
             {
@@ -65,6 +74,8 @@ namespace WindowsFormsApp1
                     label.Text = luku.ToString();
                     label.Font = new Font("Arial", 1, FontStyle.Bold);
                     int intLabel = Convert.ToInt32(label.Text);
+
+                    //Color placement
                     if (intLabel >= 8)
                     {
                         if (intLabel >= 16)
@@ -100,7 +111,7 @@ namespace WindowsFormsApp1
                         }
                     }
 
-                    gridLabel[i, j] = label;
+                    gridlabel[i, j] = label;
                     form.Controls.Add(label);
                     luku++;
                 }
@@ -108,25 +119,119 @@ namespace WindowsFormsApp1
         }
         private void Timer_CreateTimer_ShowTheTimer()
         {
-            for (int i = 0; i < 2; i++)
-            {
-                Timer Clock = new Timer();
-                Clock.Interval = 100000;
-                Clock.Start();
-                Clock.Tick += new EventHandler(Timer_Tick);
-                leveys = 10;
-                korkeus = 10;
+                int leveys = 10;
+                int korkeus = 10;
                 ruutu = new Label();
                 ruutu.Size = new Size(timerSize, timerHight);
                 ruutu.Location = new Point(timerWidht, korkeus);
                 ruutu.Font = new Font("Arial", 14, FontStyle.Bold);
                 ruutu.TextAlign = ContentAlignment.MiddleCenter;
-                ruutu.Text = Convert.ToString(Clock);
                 ruutu.BackColor = Color.White;
                 this.Controls.Add(ruutu);
 
-                timerWidht += 100;
+
+            int remainingtime = Peli.remainingTime;
+
+            ruutu.Text = Convert.ToString(remainingtime);
+
+            timerWidht += 100;
+            
+        }
+        public void Timer_TimerMovement(Timer timer)
+        {
+
+        }
+
+        public void PlaceThePieces()
+        {
+            var label = new Label();
+
+            //Black
+            //King
+            ChessPiece kingPiece = Nappulat.King();
+
+            label = gridlabel[kingPiece.X_Location, kingPiece.Y_Location];
+            label.ForeColor = kingPiece.PieceColor;
+            label.Text = kingPiece.Text;
+            label.Font = new Font("Arial", 30, FontStyle.Bold);
+
+            this.Controls.Add(label);
+
+            //Queen
+            ChessPiece queenPiece = Nappulat.Queen();
+
+            label = gridlabel[queenPiece.X_Location, queenPiece.Y_Location];
+            label.ForeColor = queenPiece.PieceColor;
+            label.Text = queenPiece.Text;
+            label.Font = new Font("Arial", 30, FontStyle.Bold);
+
+            this.Controls.Add(label);
+
+            //Bishop
+            ChessPiece bishopPiece = Nappulat.Bishop();
+
+            numberOfPieces = 2;
+
+            while (numberOfPieces < 8)
+            {
+                label = gridlabel[bishopPiece.X_Location, numberOfPieces];
+                label.ForeColor = bishopPiece.PieceColor;
+                label.Text = bishopPiece.Text;
+                label.Font = new Font("Arial", 30, FontStyle.Bold);
+
+                this.Controls.Add(label);
+                numberOfPieces = numberOfPieces + 3;
+            }
+
+            //Knight
+            ChessPiece knightPiece = Nappulat.Knight();
+
+            numberOfPieces = 1;
+
+            while (numberOfPieces < 8)
+            {
+                label = gridlabel[knightPiece.X_Location, numberOfPieces];
+                label.ForeColor = knightPiece.PieceColor;
+                label.Text = knightPiece.Text;
+                label.Font = new Font("Arial", 30, FontStyle.Bold);
+
+                this.Controls.Add(label);
+                numberOfPieces = numberOfPieces + 5;
+            }
+
+            //Rook
+            ChessPiece rookPiece = Nappulat.Rook();
+
+            numberOfPieces = 0;
+
+            while (numberOfPieces < 8)
+            {
+                label = gridlabel[rookPiece.X_Location, numberOfPieces];
+                label.ForeColor = rookPiece.PieceColor;
+                label.Text = rookPiece.Text;
+                label.Font = new Font("Arial", 30, FontStyle.Bold);
+
+                this.Controls.Add(label);
+                numberOfPieces = numberOfPieces + 7;
+            }
+
+            //Pawn
+            ChessPiece pawnPiece = Nappulat.Pawn();
+
+            numberOfPieces = 0;
+
+            while (numberOfPieces < 8)
+            {
+                label = gridlabel[pawnPiece.X_Location, numberOfPieces];
+                label.ForeColor = pawnPiece.PieceColor;
+                label.Text = pawnPiece.Text;
+                label.Font = new Font("Arial", 30, FontStyle.Bold);
+
+                this.Controls.Add(label);
+                numberOfPieces++;
             }
         }
+
+
     }
 }
