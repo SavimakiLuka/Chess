@@ -16,6 +16,7 @@ namespace WindowsFormsApp1
     {
         
         public Label ruutu;
+        public Button piece;
 
         //Timer
         int cellSize = 50;
@@ -29,10 +30,12 @@ namespace WindowsFormsApp1
         int torniMaara = 8;
         public double time = 0;
         Peli peli = new Peli();
-        Nappulat Nappulat = new Nappulat();
+        Nappulat nappulat = new Nappulat();
 
         //Pieces
         int numberOfPieces;
+        private int[] clickedPiece;
+        static string gamepiece;
 
         private static Label[,] gridlabel;
 
@@ -40,6 +43,11 @@ namespace WindowsFormsApp1
         {
             get { return gridlabel; }
             set { gridlabel = value; }
+        }
+
+        public static ClickedChessPiece ClickedPiece()
+        {
+            return new ClickedChessPiece(gamepiece);
         }
 
         public Pelilauta()
@@ -145,17 +153,25 @@ namespace WindowsFormsApp1
         public void PlaceThePieces()
         {
             var label = new Label();
+            var piece = new Button();
 
             //Black
             //King
             ChessPiece blackKingPiece = Nappulat.King();
 
             label = gridlabel[blackKingPiece.X_Location, blackKingPiece.Y_Location];
-            label.ForeColor = blackKingPiece.PieceColor;
-            label.Text = blackKingPiece.Text;
-            label.Font = new Font("Arial", 30, FontStyle.Bold);
+            piece.Location = label.Location;
+            piece.ForeColor = blackKingPiece.PieceColor;
+            piece.Text = blackKingPiece.Text;
+            piece.Size = new Size(50, 50);
+            piece.Font = new Font("Arial", 30, FontStyle.Bold);
 
-            this.Controls.Add(label);
+            this.Controls.Add(piece);
+
+            gamepiece = "King";
+            ClickedPiece();
+            piece.Click += new EventHandler(nappulat.MyClick);
+
 
             //Queen
             ChessPiece blackQueenPiece = Nappulat.Queen();
@@ -225,7 +241,7 @@ namespace WindowsFormsApp1
                 label = gridlabel[blackPawnPiece.X_Location, numberOfPieces];
                 label.ForeColor = blackPawnPiece.PieceColor;
                 label.Text = blackPawnPiece.Text;
-                label.Font = new Font("Arial", 30, FontStyle.Bold);
+                label.Font = new Font("Arial", 24, FontStyle.Bold);
 
                 this.Controls.Add(label);
                 numberOfPieces++;
@@ -310,13 +326,12 @@ namespace WindowsFormsApp1
                 label = gridlabel[blackPawnPiece.X_Location, numberOfPieces];
                 label.ForeColor = blackPawnPiece.PieceColor;
                 label.Text = blackPawnPiece.Text;
-                label.Font = new Font("Arial", 30, FontStyle.Bold);
+                label.Font = new Font("Arial", 24, FontStyle.Bold);
 
                 this.Controls.Add(label);
                 numberOfPieces++;
             }
         }
-
 
     }
 }

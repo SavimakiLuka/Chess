@@ -12,31 +12,16 @@ namespace WindowsFormsApp1
     public class Nappulat : Form
     {
         Label[,] gridlabel = Pelilauta.gridLabel;
+        ClickedChessPiece clickedChessPiece = Pelilauta.ClickedPiece();
 
         public static ChessPiece King()
         {
-
-            bool settings = true;
-
-            if (settings == true)
-            {
                 string text = "♚";
                 Color color = Color.Gray;
                 int x_Location = 7;
                 int y_Location = 3;
-                settings = false;
 
                 return new ChessPiece(text, color, x_Location, y_Location);
-            }
-            else
-            {
-                string text = "♚";
-                Color color = Color.Blue;
-                int x_Location = 0;
-                int y_Location = 4;
-
-                return new ChessPiece(text, color, x_Location, y_Location);
-            }
         }
 
         public static ChessPiece Knight()
@@ -87,6 +72,18 @@ namespace WindowsFormsApp1
             int y_Location = 0;
 
             return new ChessPiece(text, color, x_Location, y_Location);
+        }
+
+        public void MyClick(object sender, EventArgs e)
+        {
+            if (clickedChessPiece.clickedPiece == "King")
+            {
+                MessageBox.Show(clickedChessPiece.clickedPiece);
+            }
+            else
+            {
+                MessageBox.Show("Error");
+            }
         }
     }
 }
