@@ -48,9 +48,7 @@
   <ItemGroup>
     <Compile Include="ChessPiece.cs" />
     <Compile Include="ClickedChessPiece.cs" />
-    <Compile Include="Nappulat.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Nappulat.cs" />
     <Compile Include="Options.cs">
       <SubType>Form</SubType>
     </Compile>

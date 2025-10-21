@@ -1,89 +1,80 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.Properties;
+using WindowsFormsApp1;
 
-namespace WindowsFormsApp1
+public class Nappulat
 {
-    public class Nappulat : Form
+    public string Piece {  get; set; }
+    public int X { get; set; }
+    public int Y { get; set; }
+
+    Dictionary<string, int> pieceLocations;
+
+
+    public Nappulat()
     {
-        Label[,] gridlabel = Pelilauta.gridLabel;
-        ClickedChessPiece clickedChessPiece = Pelilauta.ClickedPiece();
+        
+    }
 
-        public static ChessPiece King()
+
+    public static ChessPiece King()
+    {
+        return new ChessPiece("♚", Color.Gray, 7, 3);
+    }
+
+    public static ChessPiece Queen()
+    {
+        return new ChessPiece("♛", Color.Gray, 7, 4);
+    }
+
+    public static ChessPiece Bishop()
+    {
+        return new ChessPiece("♝", Color.Gray, 7, 2);
+    }
+
+    public static ChessPiece Knight()
+    {
+        return new ChessPiece("♞", Color.Gray, 7, 1);
+    }
+
+    public static ChessPiece Rook()
+    {
+        return new ChessPiece("♜", Color.Gray, 7, 0);
+    }
+
+    public static ChessPiece Pawn()
+    {
+        return new ChessPiece("♟", Color.Gray, 6, 0);
+    }
+
+    public void Label_Click(object sender, EventArgs e)
+    {
+        Label clickedLabel = sender as Label;
+        if (clickedLabel != null)
         {
-                string text = "♚";
-                Color color = Color.Gray;
-                int x_Location = 7;
-                int y_Location = 3;
-
-                return new ChessPiece(text, color, x_Location, y_Location);
-        }
-
-        public static ChessPiece Knight()
-        {
-            string text = "♞";
-            Color color = Color.Gray;
-            int x_Location = 7;
-            int y_Location = 1;
-
-            return new ChessPiece(text, color, x_Location, y_Location);
-        }
-
-        public static ChessPiece Rook()
-        {
-            string text = "♜";
-            Color color = Color.Gray;
-            int x_Location = 7;
-            int y_Location = 0;
-
-            return new ChessPiece(text, color, x_Location, y_Location);
-        }
-
-        public static ChessPiece Bishop()
-        {
-            string text = "♝";
-            Color color = Color.Gray;
-            int x_Location = 7;
-            int y_Location = 2;
-
-            return new ChessPiece(text, color, x_Location, y_Location);
-        }
-
-        public static ChessPiece Queen()
-        {
-            string text = "♛";
-            Color color = Color.Gray;
-            int x_Location = 7;
-            int y_Location = 4;
-
-            return new ChessPiece(text, color, x_Location, y_Location);
-        }
-
-        public static ChessPiece Pawn()
-        {
-            string text = "♟";
-            Color color = Color.Gray;
-            int x_Location = 6;
-            int y_Location = 0;
-
-            return new ChessPiece(text, color, x_Location, y_Location);
-        }
-
-        public void MyClick(object sender, EventArgs e)
-        {
-            if (clickedChessPiece.clickedPiece == "King")
+            if (pieceLocations.ContainsValue(X))
             {
-                MessageBox.Show(clickedChessPiece.clickedPiece);
-            }
-            else
-            {
-                MessageBox.Show("Error");
+                Point clickedPieceLocation = (Point)clickedLabel.Tag;
+                MessageBox.Show("Toimii");
             }
         }
+    }
+
+    public void ok()
+    {
+        Dictionary<string, int> pieceLocations = new Dictionary<string, int>();
+
+        pieceLocations.Add("King", 4);
+
+
+
+    }
+
+    public override string ToString()
+    {
+        return $"{Piece} @ ({X}, {Y})";
     }
 }

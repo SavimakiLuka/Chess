@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -45,10 +46,7 @@ namespace WindowsFormsApp1
             set { gridlabel = value; }
         }
 
-        public static ClickedChessPiece ClickedPiece()
-        {
-            return new ClickedChessPiece(gamepiece);
-        }
+        
 
         public Pelilauta()
         {
@@ -119,6 +117,8 @@ namespace WindowsFormsApp1
                         }
                     }
 
+                    label.Click += new EventHandler(nappulat.Label_Click);
+
                     gridlabel[i, j] = label;
                     form.Controls.Add(label);
                     luku++;
@@ -152,186 +152,49 @@ namespace WindowsFormsApp1
 
         public void PlaceThePieces()
         {
-            var label = new Label();
-            var piece = new Button();
+            AddPieceToLabel(Nappulat.King());
+            AddPieceToLabel(Nappulat.Queen());
+            AddPieceToLabel(Nappulat.Bishop(), isSymmetric: true);
+            AddPieceToLabel(Nappulat.Knight(), isSymmetric: true);
+            AddPieceToLabel(Nappulat.Rook(), isSymmetric: true);
+            AddPieceToLabel(Nappulat.Pawn(), isRow: true);
+        }
 
-            //Black
-            //King
-            ChessPiece blackKingPiece = Nappulat.King();
-
-            label = gridlabel[blackKingPiece.X_Location, blackKingPiece.Y_Location];
-            piece.Location = label.Location;
-            piece.ForeColor = blackKingPiece.PieceColor;
-            piece.Text = blackKingPiece.Text;
-            piece.Size = new Size(50, 50);
-            piece.Font = new Font("Arial", 30, FontStyle.Bold);
-
-            this.Controls.Add(piece);
-
-            gamepiece = "King";
-            ClickedPiece();
-            piece.Click += new EventHandler(nappulat.MyClick);
-
-
-            //Queen
-            ChessPiece blackQueenPiece = Nappulat.Queen();
-
-            label = gridlabel[blackQueenPiece.X_Location, blackQueenPiece.Y_Location];
-            label.ForeColor = blackQueenPiece.PieceColor;
-            label.Text = blackQueenPiece.Text;
-            label.Font = new Font("Arial", 30, FontStyle.Bold);
-
-            this.Controls.Add(label);
-
-            //Bishop
-            ChessPiece blackBishopPiece = Nappulat.Bishop();
-
-            numberOfPieces = 2;
-
-            while (numberOfPieces < 8)
+        private void AddPieceToLabel(ChessPiece piece, bool isSymmetric = false, bool isRow = false)
+        {
+            if (isRow)
             {
-                label = gridlabel[blackBishopPiece.X_Location, numberOfPieces];
-                label.ForeColor = blackBishopPiece.PieceColor;
-                label.Text = blackBishopPiece.Text;
-                label.Font = new Font("Arial", 30, FontStyle.Bold);
-
-                this.Controls.Add(label);
-                numberOfPieces = numberOfPieces + 3;
+                // Sotilaat riviin
+                for (int i = 0; i < 8; i++)
+                {
+                    ChessPiece pawnPiece = Nappulat.Pawn();
+                    pawnPiece.Y_Location = i;
+                    UpdateLabelWithPiece(pawnPiece);
+                }
             }
-
-            //Knight
-            ChessPiece blackKnightPiece = Nappulat.Knight();
-
-            numberOfPieces = 1;
-
-            while (numberOfPieces < 8)
+            else if (isSymmetric)
             {
-                label = gridlabel[blackKnightPiece.X_Location, numberOfPieces];
-                label.ForeColor = blackKnightPiece.PieceColor;
-                label.Text = blackKnightPiece.Text;
-                label.Font = new Font("Arial", 30, FontStyle.Bold);
-
-                this.Controls.Add(label);
-                numberOfPieces = numberOfPieces + 5;
+                // Vasemmat
+                UpdateLabelWithPiece(piece);
+                piece.Y_Location = 7 - piece.Y_Location; // Symmetrinen sijainti oikealle puolelle
+                // Oikeat
+                UpdateLabelWithPiece(piece);
             }
-
-            //Rook
-            ChessPiece blackRookPiece = Nappulat.Rook();
-
-            numberOfPieces = 0;
-
-            while (numberOfPieces < 8)
+            else
             {
-                label = gridlabel[blackRookPiece.X_Location, numberOfPieces];
-                label.ForeColor = blackRookPiece.PieceColor;
-                label.Text = blackRookPiece.Text;
-                label.Font = new Font("Arial", 30, FontStyle.Bold);
-
-                this.Controls.Add(label);
-                numberOfPieces = numberOfPieces + 7;
-            }
-
-            //Pawn
-            ChessPiece blackPawnPiece = Nappulat.Pawn();
-
-            numberOfPieces = 0;
-
-            while (numberOfPieces < 8)
-            {
-                label = gridlabel[blackPawnPiece.X_Location, numberOfPieces];
-                label.ForeColor = blackPawnPiece.PieceColor;
-                label.Text = blackPawnPiece.Text;
-                label.Font = new Font("Arial", 24, FontStyle.Bold);
-
-                this.Controls.Add(label);
-                numberOfPieces++;
-            }
-
-            //White
-            //King
-            ChessPiece whiteKingPiece = Nappulat.King();
-
-            label = gridlabel[blackKingPiece.X_Location, blackKingPiece.Y_Location];
-            label.ForeColor = blackKingPiece.PieceColor;
-            label.Text = blackKingPiece.Text;
-            label.Font = new Font("Arial", 30, FontStyle.Bold);
-
-            this.Controls.Add(label);
-
-            //Queen
-            ChessPiece whiteQueenPiece = Nappulat.Queen();
-
-            label = gridlabel[blackQueenPiece.X_Location, blackQueenPiece.Y_Location];
-            label.ForeColor = blackQueenPiece.PieceColor;
-            label.Text = blackQueenPiece.Text;
-            label.Font = new Font("Arial", 30, FontStyle.Bold);
-
-            this.Controls.Add(label);
-
-            //Bishop
-            ChessPiece whiteBishopPiece = Nappulat.Bishop();
-
-            numberOfPieces = 2;
-
-            while (numberOfPieces < 8)
-            {
-                label = gridlabel[blackBishopPiece.X_Location, numberOfPieces];
-                label.ForeColor = blackBishopPiece.PieceColor;
-                label.Text = blackBishopPiece.Text;
-                label.Font = new Font("Arial", 30, FontStyle.Bold);
-
-                this.Controls.Add(label);
-                numberOfPieces = numberOfPieces + 3;
-            }
-
-            //Knight
-            ChessPiece whiteKnightPiece = Nappulat.Knight();
-
-            numberOfPieces = 1;
-
-            while (numberOfPieces < 8)
-            {
-                label = gridlabel[blackKnightPiece.X_Location, numberOfPieces];
-                label.ForeColor = blackKnightPiece.PieceColor;
-                label.Text = blackKnightPiece.Text;
-                label.Font = new Font("Arial", 30, FontStyle.Bold);
-
-                this.Controls.Add(label);
-                numberOfPieces = numberOfPieces + 5;
-            }
-
-            //Rook
-            ChessPiece whiteRookPiece = Nappulat.Rook();
-
-            numberOfPieces = 0;
-
-            while (numberOfPieces < 8)
-            {
-                label = gridlabel[blackRookPiece.X_Location, numberOfPieces];
-                label.ForeColor = blackRookPiece.PieceColor;
-                label.Text = blackRookPiece.Text;
-                label.Font = new Font("Arial", 30, FontStyle.Bold);
-
-                this.Controls.Add(label);
-                numberOfPieces = numberOfPieces + 7;
-            }
-
-            //Pawn
-            ChessPiece whitePawnPiece = Nappulat.Pawn();
-
-            numberOfPieces = 0;
-
-            while (numberOfPieces < 8)
-            {
-                label = gridlabel[blackPawnPiece.X_Location, numberOfPieces];
-                label.ForeColor = blackPawnPiece.PieceColor;
-                label.Text = blackPawnPiece.Text;
-                label.Font = new Font("Arial", 24, FontStyle.Bold);
-
-                this.Controls.Add(label);
-                numberOfPieces++;
+                // Kuningas ja kuningatar
+                UpdateLabelWithPiece(piece);
             }
         }
 
+        private void UpdateLabelWithPiece(ChessPiece piece)
+        {
+            Label label = gridlabel[piece.X_Location, piece.Y_Location];
+            label.Text = piece.Text;
+            label.ForeColor = piece.PieceColor;
+            label.Font = new Font("Arial", 28, FontStyle.Bold);
+        }
+
+        
     }
 }

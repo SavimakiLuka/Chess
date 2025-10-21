@@ -1,41 +1,41 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\",
+  "WorkspaceRootPath": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\windowsformsapp1\\pelilauta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|solutionrelative:windowsformsapp1\\pelilauta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|c:\\users\\gr289438\\desktop\\python, c#\\chess\\windowsformsapp1\\windowsformsapp1\\nappulat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|c:\\users\\lukas\\desktop\\c#\\chess\\windowsformsapp1\\windowsformsapp1\\nappulat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|solutionrelative:windowsformsapp1\\nappulat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\windowsformsapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|solutionrelative:windowsformsapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\windowsformsapp1\\pelilauta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|solutionrelative:windowsformsapp1\\pelilauta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\windowsformsapp1\\clickedchesspiece.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|solutionrelative:windowsformsapp1\\clickedchesspiece.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\windowsformsapp1\\chesspiece.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|solutionrelative:windowsformsapp1\\chesspiece.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\windowsformsapp1\\options.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|solutionrelative:windowsformsapp1\\options.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\windowsformsapp1\\peli.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\windowsformsapp1\\peli.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|solutionrelative:windowsformsapp1\\peli.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\windowsformsapp1\\pelilauta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\windowsformsapp1\\clickedchesspiece.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|solutionrelative:windowsformsapp1\\clickedchesspiece.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\windowsformsapp1\\pelilauta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|solutionrelative:windowsformsapp1\\pelilauta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\windowsformsapp1\\options.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\windowsformsapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|solutionrelative:windowsformsapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\windowsformsapp1\\chesspiece.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|solutionrelative:windowsformsapp1\\chesspiece.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\windowsformsapp1\\options.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|solutionrelative:windowsformsapp1\\options.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\windowsformsapp1\\options.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{E9B9BF04-FA74-4BA6-8EFC-BDD21083E733}|WindowsFormsApp1\\Shakki.csproj|solutionrelative:windowsformsapp1\\options.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -46,44 +46,43 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 2,
               "Title": "Peli.cs",
-              "DocumentMoniker": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Peli.cs",
+              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Peli.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Peli.cs",
-              "ToolTip": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Peli.cs",
+              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Peli.cs",
               "RelativeToolTip": "WindowsFormsApp1\\Peli.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAswEAAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-03T09:14:03.699Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Pelilauta.cs",
-              "DocumentMoniker": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Pelilauta.cs",
+              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Pelilauta.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Pelilauta.cs",
-              "ToolTip": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Pelilauta.cs",
+              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Pelilauta.cs",
               "RelativeToolTip": "WindowsFormsApp1\\Pelilauta.cs",
-              "ViewState": "AQIAAKIAAAAAAAAAAAAUwKoAAAAMAAAA",
+              "ViewState": "AgIAAKcAAAAAAAAAAAAwwDAAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-02T06:26:27.193Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Nappulat.cs",
-              "DocumentMoniker": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Nappulat.cs",
+              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Nappulat.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Nappulat.cs",
-              "ToolTip": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Nappulat.cs",
+              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Nappulat.cs",
               "RelativeToolTip": "WindowsFormsApp1\\Nappulat.cs",
-              "ViewState": "AQIAAEwAAAAAAAAAAAAIwFUAAAAMAAAA",
+              "ViewState": "AgIAACkAAAAAAAAAAAAAwDkAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-03T05:06:22.777Z",
               "IsPinned": true,
@@ -91,78 +90,73 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "Options.cs",
-              "DocumentMoniker": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Options.cs",
+              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Options.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Options.cs",
-              "ToolTip": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Options.cs",
+              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Options.cs",
               "RelativeToolTip": "WindowsFormsApp1\\Options.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAABgAAABCAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAABgAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-04T12:15:01.386Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "ChessPiece.cs",
-              "DocumentMoniker": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\ChessPiece.cs",
+              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\ChessPiece.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\ChessPiece.cs",
-              "ToolTip": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\ChessPiece.cs",
+              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\ChessPiece.cs",
               "RelativeToolTip": "WindowsFormsApp1\\ChessPiece.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAwwBYAAAAIAAAA",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAAABYAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-05T10:00:54.165Z",
               "IsPinned": true
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "ClickedChessPiece.cs",
-              "DocumentMoniker": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\ClickedChessPiece.cs",
+              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\ClickedChessPiece.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\ClickedChessPiece.cs",
-              "ToolTip": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\ClickedChessPiece.cs",
+              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\ClickedChessPiece.cs",
               "RelativeToolTip": "WindowsFormsApp1\\ClickedChessPiece.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAYwBAAAAAIAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-09T06:26:20.293Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Program.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Program.cs",
-              "ToolTip": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Program.cs",
+              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Program.cs",
               "RelativeToolTip": "WindowsFormsApp1\\Program.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAAUwBIAAAAMAAAA",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAUwBIAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-02T06:32:33.341Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
               "Title": "Pelilauta.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Pelilauta.cs",
+              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Pelilauta.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Pelilauta.cs",
-              "ToolTip": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Pelilauta.cs [Design]",
+              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Pelilauta.cs [Design]",
               "RelativeToolTip": "WindowsFormsApp1\\Pelilauta.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T04:59:38.886Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2024-10-03T04:59:38.886Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
               "Title": "Options.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\gr289438\\Desktop\\Python, C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Options.cs",
+              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Options.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Options.cs",
               "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Options.cs [Design]",
-              "RelativeToolTip": "..\\..\\..\\..\\..\\lukas\\Desktop\\C#\\Chess\\WindowsFormsApp1\\WindowsFormsApp1\\Options.cs [Design]",
+              "RelativeToolTip": "WindowsFormsApp1\\Options.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-04T12:12:35.045Z"
             }

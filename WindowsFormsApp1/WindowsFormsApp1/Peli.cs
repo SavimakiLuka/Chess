@@ -40,5 +40,30 @@ namespace WindowsFormsApp1
             // if (mustatlista muuttuu ja mustatsta listatsta ei lähde mitään)
         }
 
+
+        public static ClickedChessPiece Piecelocations()
+        {
+            return new ClickedChessPiece("King", 6, 0);
+        }
+
+        List<ClickedChessPiece> PieceLocations = new List<ClickedChessPiece>();
+
+        public void PieceLocationsUpdate()
+        {
+            if (PieceLocations.Any())
+            {
+                Console.WriteLine("PieceLocations sisältää ainakin yhden nappulan.");
+            }
+            else
+            {
+                Console.WriteLine("PieceLocations on tyhjä.");
+            }
+        }
+
+        public void AddPiece()
+        {
+            PieceLocations.Add(new ClickedChessPiece("King", 6, 0));
+        }
+
     }
 }
