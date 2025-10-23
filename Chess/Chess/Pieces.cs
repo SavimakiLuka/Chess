@@ -9,9 +9,10 @@ namespace Chess
 {
     class Pieces
     {
-        string[] pieces = { "King", "Queen", "Pawn", "Bishop", "Rook", "Knight" };
-        string[] colors = { "Black"/*, "White" */};
-        List<Piece> allPieces;
+        string[] pieces = { "King", "Queen", "Bishop", "Rook", "Knight", "Pawn" };
+        string[] colors = { "Black", "White" };
+        List<Piece> whitePieces;
+        List<Piece> blackPieces;
 
         public Pieces()
         {
@@ -22,22 +23,62 @@ namespace Chess
 
         public void AddPiece()
         {
-            allPieces = new List<Piece>();
-            Piece pieceGet = new Piece();
-            
-            
-            foreach (var color in colors)
+            blackPieces = new List<Piece>();
+            whitePieces = new List<Piece>();
+
+            for (int i = 0; i < colors.Length; i++)
             {
-                pieceGet.color = color;
                 foreach (var piece in pieces)
                 {
-                    pieceGet.name = piece;
-                    allPieces.Add();
+                    Piece pieceGet = new Piece
+                    {
+                        color = colors[i],
+                        name = piece
+                    };
+
+                    if (piece == "Pawn")
+                    {
+                        for (int x = 0; x < 8; x++)
+                        {
+                            if (i == 0)
+                            {
+                                blackPieces.Add(pieceGet);
+                            }
+                            else
+                            {
+                                whitePieces.Add(pieceGet);
+                            }
+                        }
+                    }
+                    else if (piece == "King" || piece == "Queen")
+                    {
+                        for (int x = 0; x < 1; x++)
+                        {
+                            if (i == 0)
+                            {
+                                blackPieces.Add(pieceGet);
+                            }
+                            else
+                            {
+                                whitePieces.Add(pieceGet);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int x = 0; x < 2; x++)
+                        {
+                            if (i == 0)
+                            {
+                                blackPieces.Add(pieceGet);
+                            }
+                            else
+                            {
+                                whitePieces.Add(pieceGet);
+                            }
+                        }
+                    }
                 }
-            }
-            foreach (var piece in allPieces)
-            {
-                MessageBox.Show($"{piece.Key} : {piece.Value}");
             }
         }
     }

@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace Chess
 {
@@ -17,7 +18,7 @@ namespace Chess
 
         public void CreateBoard()
         {
-            string[] boardAlphabet = {"A", "B", "C", "D", "E", "F", "H", "I"};
+            string[] boardAlphabet = {"A", "B", "C", "D", "E", "F", "G", "H"};
             int rows = 8;
             int cols = 8;
 
@@ -43,15 +44,17 @@ namespace Chess
                 {
                     var square = new Border();
                     square.Background = (row + col) % 2 == 0 ? Brushes.White : Brushes.Black;
-                    square.Name = $"{boardAlphabet[row]}{col + 1}";
+                    square.Name = $"{boardAlphabet[col]}{rows - row}";
+
+                    chessBoard.RegisterName(square.Name, square);
 
                     Grid.SetRow(square, row);
                     Grid.SetColumn(square, col);
                     chessBoard.Children.Add(square);
                 }
             }
-            Pieces pieces = new Pieces();
-            pieces.AddPiece();
+
+            object ok = chessBoard.FindName("A1");
         }
     }
 }
