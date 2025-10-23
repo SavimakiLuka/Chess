@@ -8,6 +8,6 @@ namespace Chess
 {
     class GetSet
     {
-        public string Squares { get; set; }
+        public string allPieces { get; set; }
     }
 }

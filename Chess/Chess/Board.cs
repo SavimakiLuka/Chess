@@ -50,6 +50,8 @@ namespace Chess
                     chessBoard.Children.Add(square);
                 }
             }
+            Pieces pieces = new Pieces();
+            pieces.AddPiece();
         }
     }
 }
