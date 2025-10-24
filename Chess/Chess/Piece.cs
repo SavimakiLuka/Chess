@@ -10,6 +10,9 @@ namespace Chess
     {
         public string name { get; set; }
         public string color { get; set; }
+        public string Location {  get; set; }
+        public string Emoji { get; set; }
+
 /*        public string movingPattern { get; set; }
 */    }
 }

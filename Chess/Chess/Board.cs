@@ -54,7 +54,24 @@ namespace Chess
                 }
             }
 
-            object ok = chessBoard.FindName("A1");
+            Border a1Border = chessBoard.FindName("B1") as Border;
+
+            if (a1Border != null)
+            {
+                Label label = new Label();
+                label.FontSize = 50;
+                label.Content = "♞"; 
+
+
+                if (a1Border.Child == null)
+                {
+                    a1Border.Child = label;
+                }
+                else
+                {
+                    
+                }
+            }
         }
     }
 }
