@@ -16,11 +16,17 @@ namespace Chess
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<Piece> blackPieces = new List<Piece>();
+        List<Piece> whitePieces = new List<Piece>();
         public MainWindow()
         {
             InitializeComponent();
             Board board = new Board(ChessBoard);
+            Pieces pieces = new Pieces();
             board.CreateBoard();
+            whitePieces = pieces.AddWhitePieces();
+            blackPieces = pieces.AddBlackPieces();
+            board.AddPiecesToBoard(blackPieces, whitePieces);
 
         }
 

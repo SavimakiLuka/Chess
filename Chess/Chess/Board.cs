@@ -53,25 +53,85 @@ namespace Chess
                     chessBoard.Children.Add(square);
                 }
             }
+        }
 
-            Border a1Border = chessBoard.FindName("B1") as Border;
-
-            if (a1Border != null)
+        public void AddPiecesToBoard(List<Piece> blackPieces, List<Piece> whitePieces)
+        {
+            Border a1Border;
+            foreach (var piece in whitePieces)
             {
-                Label label = new Label();
-                label.FontSize = 50;
-                label.Content = "♞"; 
+                a1Border = chessBoard.FindName(piece.Location) as Border;
 
 
-                if (a1Border.Child == null)
+                if (a1Border != null)
                 {
-                    a1Border.Child = label;
-                }
-                else
-                {
-                    
+                    Label label = new Label();
+                    label.Name = $"{piece.color}_{piece.name}_{piece.Location}";
+
+                    chessBoard.RegisterName(label.Name, label);
+
+                    label.FontSize = 12;
+                    label.Content = piece.Emoji;
+                    label.Foreground = Brushes.Red;
+
+                    label.MouseLeftButtonDown += Piece_Click;
+                    label.MouseLeftButtonUp += Piece_UnClick;
+
+
+                    if (a1Border.Child == null)
+                    {
+                        a1Border.Child = label;
+                    }
+                    else
+                    {
+
+                    }
                 }
             }
+
+            foreach (var piece in blackPieces)
+            {
+                a1Border = chessBoard.FindName(piece.Location) as Border;
+
+
+                if (a1Border != null)
+                {
+                    Label label = new Label();
+                    label.Name = $"{piece.color}_{piece.name}_{piece.Location}";
+
+                    chessBoard.RegisterName(label.Name, label);
+
+                    label.FontSize = 12;
+                    label.Content = piece.Emoji;
+                    label.Foreground = Brushes.Blue;
+
+                    label.MouseLeftButtonDown += Piece_Click;
+                    label.MouseLeftButtonUp += Piece_UnClick;
+
+
+                    if (a1Border.Child == null)
+                    {
+                        a1Border.Child = label;
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+        }
+        public void Piece_Click(object sender, EventArgs e)
+        {
+            Logic logic = new Logic(chessBoard);
+            string name = ((Label)sender).Name;
+            logic.Piece_Clicked(name);
+        }
+
+        public void Piece_UnClick(object sender, EventArgs e)
+        {
+            Logic logic = new Logic(chessBoard);
+            string name = $"{((Label)sender).Name}_poisto";
+            logic.Piece_Clicked(name);
         }
     }
 }
