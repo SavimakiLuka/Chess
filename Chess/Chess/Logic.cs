@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Chess
@@ -35,69 +36,100 @@ namespace Chess
 
             }
 
+            List<string> ableToMoves = new List<string>();
             string ableToMove = "";
 
 
             if (piece == "Pawn")
             {
-                ableToMove = Pawn_Movement(color, pieceLocation);
+                ableToMoves = Pawn_Movement(color, pieceLocation);
             }
-            else
+            else if (piece == "Bishop")
             {
-                ableToMove = Pawn_Movement(color, pieceLocation);
+                ableToMoves = Bishop_Movement(color, pieceLocation);
+            }
+            else if (piece == "Rook")
+            {
+                ableToMoves = Rook_Movement(color, pieceLocation);
+            }
+            else if (piece == "Knight")
+            {
+                ableToMoves = Knight_Movement(color, pieceLocation);
+            }
+            else if (piece == "King")
+            {
+                ableToMoves = King_Movement(color, pieceLocation);
+            }
+            else if (piece == "Queen")
+            {
+                ableToMoves = Queen_Movement(color, pieceLocation);
             }
 
-
-            Border border = chessBoard.FindName(ableToMove) as Border;
-
-            Label label = new Label();
-
-            if (remove == "poisto")
+            foreach (var move in ableToMoves)
             {
-                label.FontSize = 20;
-                label.Content = "";
-                label.Foreground = Brushes.Green;
+                
+                Border border = chessBoard.FindName(move) as Border;
 
-                border.Child = label;
-            }
-            else
-            {
-                label.FontSize = 20;
-                label.Content = "o";
-                label.Foreground = Brushes.Green;
+                Label label = new Label();
 
-                border.Child = label;
+                if (remove == "poisto")
+                {
+                    label.FontSize = 20;
+                    label.Content = "";
+                    label.Foreground = Brushes.Green;
+
+                    border.Child = label;
+                }
+                else
+                {
+                    label.FontSize = 30;
+                    label.Content = "●";
+                    label.Foreground = Brushes.Green;
+                    label.HorizontalAlignment = HorizontalAlignment.Center;
+                    label.VerticalAlignment = VerticalAlignment.Center;
+
+                    border.Child = label;
+                }
             }
         }
 
-        public string Pawn_Movement(string color, string pieceLocation)
+        public List<string> Pawn_Movement(string color, string pieceLocation)
         {
+            int possibleLocations = 0;
+
+
             int index = pieceLocation.IndexOfAny(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
             string chars = pieceLocation.Substring(0, index);
             int num = Int32.Parse(pieceLocation.Substring(index));
 
-            string ableToMove = "";
+            List<string> ableToMove = new List<string>();
 
             if (color == "Black")
             {
                 if (num == 7)
                 {
-                    ableToMove = $"{chars}{num - 2}";
+                    possibleLocations = 2;
+                    ableToMove.Add($"{chars}{num - 2}");
+                    ableToMove.Add($"{chars}{num - 1}");
+
                 }
-                else if (num == 1) 
+                else if (num == 1)
                 {
                     MessageBox.Show("Pääsit päätyyn onneksi olkoon!");
                 }
                 else
                 {
-                    ableToMove = $"{chars}{num - 1}";
+                    possibleLocations = 1;
+                    ableToMove.Add($"{chars}{num - 1}");
                 }
             }
             else
             {
                 if (num == 2)
                 {
-                    ableToMove = $"{chars}{num + 2}";
+                    possibleLocations = 2; // vois koittaa ehkä laskee jotenkin
+                    ableToMove.Add($"{chars}{num + 2}");
+                    ableToMove.Add($"{chars}{num + 1}");
                 }
                 else if (num == 8)
                 {
@@ -105,10 +137,516 @@ namespace Chess
                 }
                 else
                 {
-                    ableToMove = $"{chars}{num + 1}";
+                    ableToMove.Add($"{chars}{num + 1}");
                 }
             }
+           
             return ableToMove;
         }
+
+        public List<string> Bishop_Movement(string color, string pieceLocation)
+        {
+            int possibleLocations = 0;
+
+
+            int index = pieceLocation.IndexOfAny(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
+            string chars = pieceLocation.Substring(0, index);
+            int num = Int32.Parse(pieceLocation.Substring(index));
+
+            int alphabetNum = Array.IndexOf(alphabet, chars);
+
+            List<string> ableToMove = new List<string>();
+
+            if (color == "Black")
+            {
+                for (int i = 1; i < alphabetNum + 1; i++)
+                {
+                    if (num - i <= 8 && num - i >= 1 && alphabetNum - i >= 0 && alphabetNum - i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum - i]}{num - i}");
+                    }
+                }
+                for (int i = 1; i < 8 - alphabetNum; i++)
+                {
+                    if (num - i <= 8 && num - i >= 1 && alphabetNum + i >= 0 && alphabetNum + i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum + i]}{num - i}");
+                    }
+                }
+                for (int i = 1; i < alphabetNum + 1; i++)
+                {
+                    if (num + i <= 8 && num + i >= 1 && alphabetNum - i >= 0 && alphabetNum - i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum - i]}{num + i}");
+                    }
+                }
+                for (int i = 1; i < 8 - alphabetNum; i++)
+                {
+                    if (num + i <= 8 && num + i >= 1 && alphabetNum + i >= 0 && alphabetNum + i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum + i]}{num + i}");
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 1; i < alphabetNum + 1; i++)
+                {
+                    if (num - i <= 8 && num - i >= 1 && alphabetNum - i >= 0 && alphabetNum - i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum - i]}{num - i}");
+                    }
+                }
+                for (int i = 1; i < 8 - alphabetNum; i++)
+                {
+                    if (num - i <= 8 && num - i >= 1 && alphabetNum + i >= 0 && alphabetNum + i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum + i]}{num - i}");
+                    }
+                }
+                for (int i = 1; i < alphabetNum + 1; i++)
+                {
+                    if (num + i <= 8 && num + i >= 1 && alphabetNum - i >= 0 && alphabetNum - i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum - i]}{num + i}");
+                    }
+                }
+                for (int i = 1; i < 8 - alphabetNum; i++)
+                {
+                    if (num + i <= 8 && num + i >= 1 && alphabetNum + i >= 0 && alphabetNum + i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum + i]}{num + i}");
+                    }
+                }
+            }
+
+            return ableToMove;
+        }
+
+        public List<string> Rook_Movement(string color, string pieceLocation)
+        {
+            int possibleLocations = 0;
+
+
+            int index = pieceLocation.IndexOfAny(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
+            string chars = pieceLocation.Substring(0, index);
+            int num = Int32.Parse(pieceLocation.Substring(index));
+
+            int alphabetNum = Array.IndexOf(alphabet, chars);
+
+            List<string> ableToMove = new List<string>();
+
+            if (color == "Black")
+            {
+                for (int i = 1; i < num + 1; i++)
+                {
+                    if (num - i <= 8 && num - i >= 1)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum]}{num - i}");
+                    }
+                }
+                for (int i = 1; i < 8 - num + 1; i++)
+                {
+                    if (num + i <= 8 && num + i >= 1)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum]}{num + i}");
+                    }
+                }
+                for (int i = 1; i < alphabetNum + 1; i++)
+                {
+                    if (alphabetNum - i >= 0 && alphabetNum - i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum - i]}{num}");
+                    }
+                }
+                for (int i = 1; i < 8 - alphabetNum; i++)
+                {
+                    if (alphabetNum + i >= 0 && alphabetNum + i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum + i]}{num}");
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 1; i < num + 1; i++)
+                {
+                    if (num - i <= 8 && num - i >= 1)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum]}{num - i}");
+                    }
+                }
+                for (int i = 1; i < 8 - num + 1; i++)
+                {
+                    if (num + i <= 8 && num + i >= 1)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum]}{num + i}");
+                    }
+                }
+                for (int i = 1; i < alphabetNum + 1; i++)
+                {
+                    if (alphabetNum - i >= 0 && alphabetNum - i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum - i]}{num}");
+                    }
+                }
+                for (int i = 1; i < 8 - alphabetNum; i++)
+                {
+                    if (alphabetNum + i >= 0 && alphabetNum + i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum + i]}{num}");
+                    }
+                }
+            }
+
+            return ableToMove;
+        }
+
+        public List<string> Knight_Movement(string color, string pieceLocation)
+        {
+            int possibleLocations = 0;
+
+
+            int index = pieceLocation.IndexOfAny(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
+            string chars = pieceLocation.Substring(0, index);
+            int num = Int32.Parse(pieceLocation.Substring(index));
+
+            int alphabetNum = Array.IndexOf(alphabet, chars);
+
+            List<string> ableToMove = new List<string>();
+
+            if (color == "Black")
+            {
+                if (num - 2 <= 8 && num - 2 >= 1 && alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum - 1]}{num - 2}");
+                }
+
+                if (num - 2 <= 8 && num - 2 >= 1 && alphabetNum + 1 >= 0 && alphabetNum + 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum + 1]}{num - 2}");
+                }
+
+                if (num + 2 <= 8 && num + 2 >= 1 && alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum - 1]}{num + 2}");
+                }
+
+                if (num + 2 <= 8 && num + 2 >= 1 && alphabetNum + 1 >= 0 && alphabetNum + 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum + 1]}{num + 2}");
+                }
+                //sivuille
+                if (num - 1 <= 8 && num - 1 >= 1 && alphabetNum - 2 >= 0 && alphabetNum - 2 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum - 2]}{num - 1}");
+                }
+
+                if (num + 1 <= 8 && num + 1 >= 1 && alphabetNum - 2 >= 0 && alphabetNum - 2 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum - 2]}{num + 1}");
+                }
+
+                if (num - 1 <= 8 && num - 1 >= 1 && alphabetNum + 2 >= 0 && alphabetNum + 2 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum + 2]}{num - 1}");
+                }
+
+                if (num + 1 <= 8 && num + 1 >= 1 && alphabetNum + 2 >= 0 && alphabetNum + 2 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum + 2]}{num + 1}");
+                }
+            }
+            else
+            {
+                if (num - 2 <= 8 && num - 2 >= 1 && alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum - 1]}{num - 2}");
+                }
+
+                if (num - 2 <= 8 && num - 2 >= 1 && alphabetNum + 1 >= 0 && alphabetNum + 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum + 1]}{num - 2}");
+                }
+
+                if (num + 2 <= 8 && num + 2 >= 1 && alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum - 1]}{num + 2}");
+                }
+
+                if (num + 2 <= 8 && num + 2 >= 1 && alphabetNum + 1 >= 0 && alphabetNum + 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum + 1]}{num + 2}");
+                }
+                //sivuille
+                if (num - 1 <= 8 && num - 1 >= 1 && alphabetNum - 2 >= 0 && alphabetNum - 2 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum - 2]}{num - 1}");
+                }
+
+                if (num + 1 <= 8 && num + 1 >= 1 && alphabetNum - 2 >= 0 && alphabetNum - 2 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum - 2]}{num + 1}");
+                }
+
+                if (num - 1 <= 8 && num - 1 >= 1 && alphabetNum + 2 >= 0 && alphabetNum + 2 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum + 2]}{num - 1}");
+                }
+
+                if (num + 1 <= 8 && num + 1 >= 1 && alphabetNum + 2 >= 0 && alphabetNum + 2 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum + 2]}{num + 1}");
+                }
+            }
+
+            return ableToMove;
+        }
+
+        public List<string> King_Movement(string color, string pieceLocation)
+        {
+            int possibleLocations = 0;
+
+
+            int index = pieceLocation.IndexOfAny(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
+            string chars = pieceLocation.Substring(0, index);
+            int num = Int32.Parse(pieceLocation.Substring(index));
+
+            int alphabetNum = Array.IndexOf(alphabet, chars);
+
+            List<string> ableToMove = new List<string>();
+
+            if (color == "Black")
+            {
+                if (num + 1 <= 8 && num + 1 >= 1 && alphabetNum + 1 >= 0 && alphabetNum + 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum + 1]}{num + 1}");
+                }
+
+                if (num - 1 <= 8 && num - 1 >= 1 && alphabetNum + 1 >= 0 && alphabetNum + 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum + 1]}{num - 1}");
+                }
+
+                if (num + 1 <= 8 && num + 1 >= 1 && alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum - 1]}{num + 1}");
+                }
+
+                if (num - 1 <= 8 && num - 1 >= 1 && alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum - 1]}{num - 1}");
+                }
+
+                if (num + 1 <= 8 && num + 1 >= 1)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum]}{num + 1}");
+                }
+
+                if (num - 1 <= 8 && num - 1 >= 1)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum]}{num - 1}");
+                }
+
+                if (alphabetNum + 1 >= 0 && alphabetNum + 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum + 1]}{num}");
+                }
+
+                if (alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum - 1]}{num}");
+                }
+            }
+            else
+            {
+                if (num + 1 <= 8 && num + 1 >= 1 && alphabetNum + 1 >= 0 && alphabetNum + 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum + 1]}{num + 1}");
+                }
+
+                if (num - 1 <= 8 && num - 1 >= 1 && alphabetNum + 1 >= 0 && alphabetNum + 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum + 1]}{num - 1}");
+                }
+
+                if (num + 1 <= 8 && num + 1 >= 1 && alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum - 1]}{num + 1}");
+                }
+
+                if (num - 1 <= 8 && num - 1 >= 1 && alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum - 1]}{num - 1}");
+                }
+
+                if (num + 1 <= 8 && num + 1 >= 1)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum]}{num + 1}");
+                }
+
+                if (num - 1 <= 8 && num - 1 >= 1)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum]}{num - 1}");
+                }
+
+                if (alphabetNum + 1 >= 0 && alphabetNum + 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum + 1]}{num}");
+                }
+
+                if (alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
+                {
+                    ableToMove.Add($"{alphabet[alphabetNum - 1]}{num }");
+                }
+            }
+
+            return ableToMove;
+        }
+
+        public List<string> Queen_Movement(string color, string pieceLocation)
+        {
+            int possibleLocations = 0;
+
+
+            int index = pieceLocation.IndexOfAny(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
+            string chars = pieceLocation.Substring(0, index);
+            int num = Int32.Parse(pieceLocation.Substring(index));
+
+            int alphabetNum = Array.IndexOf(alphabet, chars);
+
+            List<string> ableToMove = new List<string>();
+
+            if (color == "Black")
+            {
+                for (int i = 1; i < alphabetNum + 1; i++)
+                {
+                    if (num - i <= 8 && num - i >= 1 && alphabetNum - i >= 0 && alphabetNum - i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum - i]}{num - i}");
+                    }
+                }
+                for (int i = 1; i < 8 - alphabetNum; i++)
+                {
+                    if (num - i <= 8 && num - i >= 1 && alphabetNum + i >= 0 && alphabetNum + i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum + i]}{num - i}");
+                    }
+                }
+                for (int i = 1; i < alphabetNum + 1; i++)
+                {
+                    if (num + i <= 8 && num + i >= 1 && alphabetNum - i >= 0 && alphabetNum - i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum - i]}{num + i}");
+                    }
+                }
+                for (int i = 1; i < 8 - alphabetNum; i++)
+                {
+                    if (num + i <= 8 && num + i >= 1 && alphabetNum + i >= 0 && alphabetNum + i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum + i]}{num + i}");
+                    }
+                }
+                for (int i = 1; i < num + 1; i++)
+                {
+                    if (num - 3 <= 8 && num - 3 >= 1 && alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum - 1]}{num - 3}");
+                    }
+                }
+                for (int i = 1; i < 8 - num + 1; i++)
+                {
+                    if (num + i <= 8 && num + i >= 1)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum]}{num + i}");
+                    }
+                }
+                for (int i = 1; i < alphabetNum + 1; i++)
+                {
+                    if (alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum - i]}{num}");
+                    }
+                }
+                for (int i = 1; i < 8 - alphabetNum; i++)
+                {
+                    if (alphabetNum + 1 >= 0 && alphabetNum + 1 <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum + i]}{num}");
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 1; i < alphabetNum + 1; i++)
+                {
+                    if (num - i <= 8 && num - i >= 1 && alphabetNum - i >= 0 && alphabetNum - i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum - i]}{num - i}");
+                    }
+                }
+                for (int i = 1; i < 8 - alphabetNum; i++)
+                {
+                    if (num - i <= 8 && num - i >= 1 && alphabetNum + i >= 0 && alphabetNum + i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum + i]}{num - i}");
+                    }
+                }
+                for (int i = 1; i < alphabetNum + 1; i++)
+                {
+                    if (num + i <= 8 && num + i >= 1 && alphabetNum - i >= 0 && alphabetNum - i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum - i]}{num + i}");
+                    }
+                }
+                for (int i = 1; i < 8 - alphabetNum; i++)
+                {
+                    if (num + i <= 8 && num + i >= 1 && alphabetNum + i >= 0 && alphabetNum + i <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum + i]}{num + i}");
+                    }
+                }
+                for (int i = 1; i < num + 1; i++)
+                {
+                    if (num - i <= 8 && num - i >= 1)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum]}{num - i}");
+                    }
+                }
+                for (int i = 1; i < 8 - num + 1; i++)
+                {
+                    if (num + i <= 8 && num + i >= 1)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum]}{num + i}");
+                    }
+                }
+                for (int i = 1; i < alphabetNum + 1; i++)
+                {
+                    if (alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum - i]}{num}");
+                    }
+                }
+                for (int i = 1; i < 8 - alphabetNum; i++)
+                {
+                    if (alphabetNum + 1 >= 0 && alphabetNum + 1 <= 7)
+                    {
+                        ableToMove.Add($"{alphabet[alphabetNum + i]}{num}");
+                    }
+                }
+            }
+
+            return ableToMove;
+        }
+
+        /*private void ChessBoard_MouseMove(object sender, MouseEventArgs e)
+        {
+            // Hae hiiren sijainti suhteessa lautaan
+            System.Windows.Point pos = e.GetPosition(chessBoard);
+
+            // Siirrä labelin paikkaa hiiren mukaan
+            Canvas.SetLeft(followLabel, pos.X - followLabel.ActualWidth / 2);
+            Canvas.SetTop(followLabel, pos.Y - followLabel.ActualHeight / 2);
+        }*/
     }
 }

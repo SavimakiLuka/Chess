@@ -49,7 +49,7 @@ namespace Chess
                         {
                             color = colors[1],
                             name = piece,
-                            Emoji = piece,
+                            Emoji = "♙",
                             Location = $"{alphabet[x]}2"
                         };
                         whitePieces.Add(pieceGet);
@@ -59,7 +59,13 @@ namespace Chess
                 {
                     for (int x = 0; x < 1; x++)
                     {
-                        pieceGet.Location = $"{kingColumns[0]}1";
+                        pieceGet = new Piece
+                        {
+                            color = colors[1],
+                            name = piece,
+                            Emoji = "♔",
+                            Location = $"{kingColumns[0]}1"
+                        };
                         whitePieces.Add(pieceGet);
                     }
                 }
@@ -67,7 +73,13 @@ namespace Chess
                 {
                     for (int x = 0; x < 1; x++)
                     {
-                        pieceGet.Location = $"{queenColumns[1]}1";
+                        pieceGet = new Piece
+                        {
+                            color = colors[1],
+                            name = piece,
+                            Emoji = "♕",
+                            Location = $"{queenColumns[1]}1"
+                        };
                         whitePieces.Add(pieceGet);
                     }
                 }
@@ -79,7 +91,7 @@ namespace Chess
                         {
                             color = colors[1],
                             name = piece,
-                            Emoji = piece,
+                            Emoji = "♖",
                             Location = $"{rookColumns[x]}1"
                         };
                         whitePieces.Add(pieceGet);
@@ -93,7 +105,7 @@ namespace Chess
                         {
                             color = colors[1],
                             name = piece,
-                            Emoji = piece,
+                            Emoji = "♘",
                             Location = $"{knightColumns[x]}1"
                         };
                         whitePieces.Add(pieceGet);
@@ -107,7 +119,7 @@ namespace Chess
                         {
                             color = colors[1],
                             name = piece,
-                            Emoji = piece,
+                            Emoji = "♗",
                             Location = $"{bishopColumns[x]}1"
                         };
                         whitePieces.Add(pieceGet);
@@ -137,7 +149,7 @@ namespace Chess
                         {
                             color = colors[0],
                             name = piece,
-                            Emoji = piece,
+                            Emoji = "♟",
                             Location = $"{alphabet[x]}7"
                         };
                         blackPieces.Add(pieceGet);
@@ -147,7 +159,13 @@ namespace Chess
                 {
                     for (int x = 0; x < 1; x++)
                     {
-                        pieceGet.Location = $"{kingColumns[1]}8";
+                        pieceGet = new Piece
+                        {
+                            color = colors[0],
+                            name = piece,
+                            Emoji = "♚",
+                            Location = $"{kingColumns[1]}8"
+                        };
                         blackPieces.Add(pieceGet);
                     }
                 }
@@ -155,7 +173,13 @@ namespace Chess
                 {
                     for (int x = 0; x < 1; x++)
                     {
-                         pieceGet.Location = $"{queenColumns[0]}8";
+                        pieceGet = new Piece
+                        {
+                            color = colors[0],
+                            name = piece,
+                            Emoji = "♛",
+                            Location = $"{queenColumns[0]}8"
+                        };
                         blackPieces.Add(pieceGet);
                     }
                 }
@@ -167,7 +191,7 @@ namespace Chess
                         {
                             color = colors[0],
                             name = piece,
-                            Emoji = piece,
+                            Emoji = "♜",
                             Location = $"{rookColumns[x]}8"
                         };
                         blackPieces.Add(pieceGet);
@@ -181,7 +205,7 @@ namespace Chess
                         {
                             color = colors[0],
                             name = piece,
-                            Emoji = piece,
+                            Emoji = "♞",
                             Location = $"{knightColumns[x]}8"
                         };
                         blackPieces.Add(pieceGet);
@@ -195,7 +219,7 @@ namespace Chess
                         {
                             color = colors[0],
                             name = piece,
-                            Emoji = piece,
+                            Emoji = "♝",
                             Location = $"{bishopColumns[x]}8"
                         };
                         blackPieces.Add(pieceGet);

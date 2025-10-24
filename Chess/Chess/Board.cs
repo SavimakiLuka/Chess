@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
@@ -70,7 +71,7 @@ namespace Chess
 
                     chessBoard.RegisterName(label.Name, label);
 
-                    label.FontSize = 12;
+                    label.FontSize = 40;
                     label.Content = piece.Emoji;
                     label.Foreground = Brushes.Red;
 
@@ -101,12 +102,14 @@ namespace Chess
 
                     chessBoard.RegisterName(label.Name, label);
 
-                    label.FontSize = 12;
+                    label.FontSize = 40;
                     label.Content = piece.Emoji;
                     label.Foreground = Brushes.Blue;
 
                     label.MouseLeftButtonDown += Piece_Click;
                     label.MouseLeftButtonUp += Piece_UnClick;
+
+                    label.MouseLeftButtonUp += ChessBoard_MouseDown;
 
 
                     if (a1Border.Child == null)
@@ -132,6 +135,12 @@ namespace Chess
             Logic logic = new Logic(chessBoard);
             string name = $"{((Label)sender).Name}_poisto";
             logic.Piece_Clicked(name);
+        }
+
+        private void ChessBoard_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Point pos = e.GetPosition(chessBoard);
+            MessageBox.Show($"Klikkasit kohtaa X={pos.X}, Y={pos.Y}");
         }
     }
 }
