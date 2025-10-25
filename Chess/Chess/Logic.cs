@@ -15,10 +15,14 @@ namespace Chess
     {
         private Grid chessBoard;
         string[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H" };
+        List<Piece> blackPiecesInfo = new();
+        List<Piece> whitePiecesInfo = new();
 
-        public Logic(Grid grid)
+        public Logic(Grid grid, List<Piece> blackPieces, List<Piece> whitePieces)
         {
             chessBoard = grid;
+            blackPiecesInfo = blackPieces;
+            whitePiecesInfo = whitePieces;
         }
 
         public void Piece_Clicked(string clickedPiece)
@@ -39,7 +43,7 @@ namespace Chess
             List<string> ableToMoves = new List<string>();
             string ableToMove = "";
 
-
+            // Katsotaan mikä nappula oli painettu juuri olike se sotilas vai kuningas vai mikä
             if (piece == "Pawn")
             {
                 ableToMoves = Pawn_Movement(color, pieceLocation);
@@ -67,28 +71,53 @@ namespace Chess
 
             foreach (var move in ableToMoves)
             {
-                
+                // katsoo ruudun paikan johon laitetaan label
                 Border border = chessBoard.FindName(move) as Border;
+
+                // katsoo onko ruudun paikalla valmiiksi jo joku nappula
+                bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
+                bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
 
                 Label label = new Label();
 
-                if (remove == "poisto")
+                // Jos ruudussa ei ole nappulaa niin luodaan liikkumis mahdollisuus pallo laudalle
+                if (blackMoveChanceHit == false && whiteMoveChanceHit == false)
                 {
-                    label.FontSize = 20;
-                    label.Content = "";
-                    label.Foreground = Brushes.Green;
+                    
 
-                    border.Child = label;
+                    if (remove == "poisto") // poistetaan liikkumis mahdollisuus pallo
+                    {
+                        label.Content = "";
+
+                        border.Child = label;
+                    }
+                    else // lisätään liikkumis mahdollisuus pallo
+                    {
+                        label.FontSize = 30;
+                        label.Content = "●";
+                        label.Foreground = Brushes.Green;
+                        label.HorizontalAlignment = HorizontalAlignment.Center;
+                        label.VerticalAlignment = VerticalAlignment.Center;
+
+                        border.Child = label;
+                    }
                 }
                 else
                 {
                     label.FontSize = 30;
                     label.Content = "●";
-                    label.Foreground = Brushes.Green;
+                    label.Foreground = Brushes.Red;
                     label.HorizontalAlignment = HorizontalAlignment.Center;
                     label.VerticalAlignment = VerticalAlignment.Center;
 
-                    border.Child = label;
+                    if (color == "Black" && blackMoveChanceHit == false) // katsoo jos painetun nappulan väri on musta ja ettei ruudulla ole mustaa nappulaa
+                    {
+                        border.Child = label;
+                    }
+                    else if (color == "White" && whiteMoveChanceHit == false) // katsoo jos painetun nappulan väri on valkoinen ja ettei ruudulla ole valkoista nappulaa
+                    {
+                        border.Child = label;
+                    }
                 }
             }
         }
@@ -549,9 +578,9 @@ namespace Chess
                 }
                 for (int i = 1; i < num + 1; i++)
                 {
-                    if (num - 3 <= 8 && num - 3 >= 1 && alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
+                    if (num - i <= 8 && num - i >= 1)
                     {
-                        ableToMove.Add($"{alphabet[alphabetNum - 1]}{num - 3}");
+                        ableToMove.Add($"{alphabet[alphabetNum]}{num - i}");
                     }
                 }
                 for (int i = 1; i < 8 - num + 1; i++)

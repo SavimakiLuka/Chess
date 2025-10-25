@@ -11,6 +11,8 @@ namespace Chess
     class Board
     {
         private Grid chessBoard;
+        List<Piece> blackPiecesInfo = new();
+        List<Piece> whitePiecesInfo = new();
 
         public Board(Grid grid)
         {
@@ -63,6 +65,7 @@ namespace Chess
             {
                 a1Border = chessBoard.FindName(piece.Location) as Border;
 
+                whitePiecesInfo.Add(piece);
 
                 if (a1Border != null)
                 {
@@ -94,6 +97,7 @@ namespace Chess
             {
                 a1Border = chessBoard.FindName(piece.Location) as Border;
 
+                blackPiecesInfo.Add(piece);
 
                 if (a1Border != null)
                 {
@@ -125,14 +129,14 @@ namespace Chess
         }
         public void Piece_Click(object sender, EventArgs e)
         {
-            Logic logic = new Logic(chessBoard);
+            Logic logic = new Logic(chessBoard, blackPiecesInfo, whitePiecesInfo);
             string name = ((Label)sender).Name;
             logic.Piece_Clicked(name);
         }
 
         public void Piece_UnClick(object sender, EventArgs e)
         {
-            Logic logic = new Logic(chessBoard);
+            Logic logic = new Logic(chessBoard, blackPiecesInfo, whitePiecesInfo);
             string name = $"{((Label)sender).Name}_poisto";
             logic.Piece_Clicked(name);
         }
