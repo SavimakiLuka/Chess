@@ -83,7 +83,7 @@
               "RelativeDocumentMoniker": "Chess\\Logic.cs",
               "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\Logic.cs",
               "RelativeToolTip": "Chess\\Logic.cs",
-              "ViewState": "AgIAAGkAAAAAAAAAAAAcwHYAAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHYAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-21T16:04:25.191Z",
               "EditorCaption": ""
@@ -98,8 +98,7 @@
               "RelativeToolTip": "Chess\\GetSet.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-20T16:45:28.964Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-20T16:45:28.964Z"
             },
             {
               "$type": "Document",
@@ -111,8 +110,7 @@
               "RelativeToolTip": "Chess\\Board.cs",
               "ViewState": "AgIAAGoAAAAAAAAAAAAAwH4AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-20T16:42:22.287Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-20T16:42:22.287Z"
             },
             {
               "$type": "Document",
