@@ -19,8 +19,8 @@ namespace Chess
         List<string> knightColumns = ["B", "G"];
         List<string> rookColumns = ["A", "H"];
         List<string> bishopColumns = ["C", "F"];
-        List<string> kingColumns = ["D", "E"];
-        List<string> queenColumns = ["D", "E"];
+        List<string> kingColumns = ["E"];
+        List<string> queenColumns = ["D"];
 
         public Pieces()
         {
@@ -78,7 +78,7 @@ namespace Chess
                             color = colors[1],
                             name = piece,
                             Emoji = "♕",
-                            Location = $"{queenColumns[1]}1"
+                            Location = $"{queenColumns[0]}1"
                         };
                         whitePieces.Add(pieceGet);
                     }
@@ -164,7 +164,7 @@ namespace Chess
                             color = colors[0],
                             name = piece,
                             Emoji = "♚",
-                            Location = $"{kingColumns[1]}8"
+                            Location = $"{kingColumns[0]}8"
                         };
                         blackPieces.Add(pieceGet);
                     }

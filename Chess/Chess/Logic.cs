@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -17,6 +18,7 @@ namespace Chess
         string[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H" };
         List<Piece> blackPiecesInfo = new();
         List<Piece> whitePiecesInfo = new();
+        List<string> ableToMoves;
 
         public Logic(Grid grid, List<Piece> blackPieces, List<Piece> whitePieces)
         {
@@ -31,6 +33,9 @@ namespace Chess
             string piece = clickedPiece.Split('_')[1];
             string pieceLocation = clickedPiece.Split('_')[2];
             string remove = "";
+            ableToMoves = new List<string>();
+            string ableToMove = "";
+
             try
             {
                 remove = clickedPiece.Split('_')[3];
@@ -40,34 +45,7 @@ namespace Chess
 
             }
 
-            List<string> ableToMoves = new List<string>();
-            string ableToMove = "";
-
-            // Katsotaan mikä nappula oli painettu juuri olike se sotilas vai kuningas vai mikä
-            if (piece == "Pawn")
-            {
-                ableToMoves = Pawn_Movement(color, pieceLocation);
-            }
-            else if (piece == "Bishop")
-            {
-                ableToMoves = Bishop_Movement(color, pieceLocation);
-            }
-            else if (piece == "Rook")
-            {
-                ableToMoves = Rook_Movement(color, pieceLocation);
-            }
-            else if (piece == "Knight")
-            {
-                ableToMoves = Knight_Movement(color, pieceLocation);
-            }
-            else if (piece == "King")
-            {
-                ableToMoves = King_Movement(color, pieceLocation);
-            }
-            else if (piece == "Queen")
-            {
-                ableToMoves = Queen_Movement(color, pieceLocation);
-            }
+            ableToMoves = PressedPiece(color, pieceLocation, piece);
 
             foreach (var move in ableToMoves)
             {
@@ -81,11 +59,9 @@ namespace Chess
                 Label label = new Label();
 
                 // Jos ruudussa ei ole nappulaa niin luodaan liikkumis mahdollisuus pallo laudalle
-                if (blackMoveChanceHit == false && whiteMoveChanceHit == false)
+                if (!blackMoveChanceHit && !whiteMoveChanceHit)
                 {
-                    
-
-                    if (remove == "poisto") // poistetaan liikkumis mahdollisuus pallo
+                    if (remove == "true") // poistetaan liikkumis mahdollisuus pallo
                     {
                         label.Content = "";
 
@@ -95,7 +71,8 @@ namespace Chess
                     {
                         label.FontSize = 30;
                         label.Content = "●";
-                        label.Foreground = Brushes.Green;
+                        label.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#7f7f7f"));
+                        label.Opacity = 0.5;
                         label.HorizontalAlignment = HorizontalAlignment.Center;
                         label.VerticalAlignment = VerticalAlignment.Center;
 
@@ -104,19 +81,33 @@ namespace Chess
                 }
                 else
                 {
-                    label.FontSize = 30;
-                    label.Content = "●";
-                    label.Foreground = Brushes.Red;
-                    label.HorizontalAlignment = HorizontalAlignment.Center;
-                    label.VerticalAlignment = VerticalAlignment.Center;
-
                     if (color == "Black" && blackMoveChanceHit == false) // katsoo jos painetun nappulan väri on musta ja ettei ruudulla ole mustaa nappulaa
                     {
-                        border.Child = label;
+                        if (border.Child is Label existingLabel)
+                        {
+                            if (remove == "true") // poistetaan liikkumis mahdollisuus pallo
+                            {
+                                existingLabel.Foreground = Brushes.White;  // Vaihtaa tekstin värin valkoiseksi
+                            }
+                            else // lisätään liikkumis mahdollisuus pallo
+                            {
+                                existingLabel.Foreground = Brushes.Red;  // Vaihtaa tekstin värin punaiseksi
+                            }
+                        }
                     }
                     else if (color == "White" && whiteMoveChanceHit == false) // katsoo jos painetun nappulan väri on valkoinen ja ettei ruudulla ole valkoista nappulaa
                     {
-                        border.Child = label;
+                        if (border.Child is Label existingLabel)
+                        {
+                            if (remove == "true") // poistetaan liikkumis mahdollisuus pallo
+                            {
+                                existingLabel.Foreground = Brushes.Black;  // Vaihtaa tekstin värin mustaksi
+                            }
+                            else // lisätään liikkumis mahdollisuus pallo
+                            {
+                                existingLabel.Foreground = Brushes.Red;  // Vaihtaa tekstin värin punaiseksi
+                            }
+                        }
                     }
                 }
             }
@@ -668,6 +659,36 @@ namespace Chess
             return ableToMove;
         }
 
+        public List<string> PressedPiece(string color, string pieceLocation, string piece)
+        {
+            // Katsotaan mikä nappula oli painettu juuri olike se sotilas vai kuningas vai mikä
+            if (piece == "Pawn")
+            {
+                ableToMoves = Pawn_Movement(color, pieceLocation);
+            }
+            else if (piece == "Bishop")
+            {
+                ableToMoves = Bishop_Movement(color, pieceLocation);
+            }
+            else if (piece == "Rook")
+            {
+                ableToMoves = Rook_Movement(color, pieceLocation);
+            }
+            else if (piece == "Knight")
+            {
+                ableToMoves = Knight_Movement(color, pieceLocation);
+            }
+            else if (piece == "King")
+            {
+                ableToMoves = King_Movement(color, pieceLocation);
+            }
+            else if (piece == "Queen")
+            {
+                ableToMoves = Queen_Movement(color, pieceLocation);
+            }
+            return ableToMoves;
+        }
+        
         /*private void ChessBoard_MouseMove(object sender, MouseEventArgs e)
         {
             // Hae hiiren sijainti suhteessa lautaan

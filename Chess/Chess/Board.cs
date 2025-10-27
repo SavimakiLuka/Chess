@@ -46,7 +46,9 @@ namespace Chess
                 for (int col = 0; col < cols; col++)
                 {
                     var square = new Border();
-                    square.Background = (row + col) % 2 == 0 ? Brushes.White : Brushes.Black;
+                    square.Background = (row + col) % 2 == 0
+                        ? (SolidColorBrush)(new BrushConverter().ConvertFrom("#DEDEDE"))  // vaalea ruutu, lähes valkoinen
+                        : (SolidColorBrush)(new BrushConverter().ConvertFrom("#141414"));
                     square.Name = $"{boardAlphabet[col]}{rows - row}";
 
                     chessBoard.RegisterName(square.Name, square);
@@ -76,7 +78,14 @@ namespace Chess
 
                     label.FontSize = 40;
                     label.Content = piece.Emoji;
-                    label.Foreground = Brushes.Red;
+                    label.Foreground = Brushes.White;
+                    label.Effect = new System.Windows.Media.Effects.DropShadowEffect
+                    {
+                        Color = Colors.Black,      // rajausväri
+                        BlurRadius = 1,            // terävä reuna
+                        ShadowDepth = 1,           // suoraan emojiin ympärille
+                        Opacity = 1
+                    };
 
                     label.MouseLeftButtonDown += Piece_Click;
                     label.MouseLeftButtonUp += Piece_UnClick;
@@ -108,7 +117,14 @@ namespace Chess
 
                     label.FontSize = 40;
                     label.Content = piece.Emoji;
-                    label.Foreground = Brushes.Blue;
+                    label.Foreground = Brushes.Black;
+                    label.Effect = new System.Windows.Media.Effects.DropShadowEffect
+                    {
+                        Color = Colors.White,      // rajausväri
+                        BlurRadius = 1,            // terävä reuna
+                        ShadowDepth = 1,           // suoraan emojiin ympärille
+                        Opacity = 1
+                    };
 
                     label.MouseLeftButtonDown += Piece_Click;
                     label.MouseLeftButtonUp += Piece_UnClick;
@@ -130,14 +146,14 @@ namespace Chess
         public void Piece_Click(object sender, EventArgs e)
         {
             Logic logic = new Logic(chessBoard, blackPiecesInfo, whitePiecesInfo);
-            string name = ((Label)sender).Name;
+            string name = $"{((Label)sender).Name}_false";
             logic.Piece_Clicked(name);
         }
 
         public void Piece_UnClick(object sender, EventArgs e)
         {
             Logic logic = new Logic(chessBoard, blackPiecesInfo, whitePiecesInfo);
-            string name = $"{((Label)sender).Name}_poisto";
+            string name = $"{((Label)sender).Name}_true";
             logic.Piece_Clicked(name);
         }
 
