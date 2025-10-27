@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace Chess
         List<Piece> blackPiecesInfo = new();
         List<Piece> whitePiecesInfo = new();
         List<string> ableToMoves;
+        List<string> ableToEat;
 
         public Logic(Grid grid, List<Piece> blackPieces, List<Piece> whitePieces)
         {
@@ -47,70 +49,8 @@ namespace Chess
 
             ableToMoves = PressedPiece(color, pieceLocation, piece);
 
-            foreach (var move in ableToMoves)
-            {
-                // katsoo ruudun paikan johon laitetaan label
-                Border border = chessBoard.FindName(move) as Border;
+            MoveChangeVisualCreate(color, remove);
 
-                // katsoo onko ruudun paikalla valmiiksi jo joku nappula
-                bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
-                bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
-
-                Label label = new Label();
-
-                // Jos ruudussa ei ole nappulaa niin luodaan liikkumis mahdollisuus pallo laudalle
-                if (!blackMoveChanceHit && !whiteMoveChanceHit)
-                {
-                    if (remove == "true") // poistetaan liikkumis mahdollisuus pallo
-                    {
-                        label.Content = "";
-
-                        border.Child = label;
-                    }
-                    else // lisätään liikkumis mahdollisuus pallo
-                    {
-                        label.FontSize = 30;
-                        label.Content = "●";
-                        label.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#7f7f7f"));
-                        label.Opacity = 0.5;
-                        label.HorizontalAlignment = HorizontalAlignment.Center;
-                        label.VerticalAlignment = VerticalAlignment.Center;
-
-                        border.Child = label;
-                    }
-                }
-                else
-                {
-                    if (color == "Black" && blackMoveChanceHit == false) // katsoo jos painetun nappulan väri on musta ja ettei ruudulla ole mustaa nappulaa
-                    {
-                        if (border.Child is Label existingLabel)
-                        {
-                            if (remove == "true") // poistetaan liikkumis mahdollisuus pallo
-                            {
-                                existingLabel.Foreground = Brushes.White;  // Vaihtaa tekstin värin valkoiseksi
-                            }
-                            else // lisätään liikkumis mahdollisuus pallo
-                            {
-                                existingLabel.Foreground = Brushes.Red;  // Vaihtaa tekstin värin punaiseksi
-                            }
-                        }
-                    }
-                    else if (color == "White" && whiteMoveChanceHit == false) // katsoo jos painetun nappulan väri on valkoinen ja ettei ruudulla ole valkoista nappulaa
-                    {
-                        if (border.Child is Label existingLabel)
-                        {
-                            if (remove == "true") // poistetaan liikkumis mahdollisuus pallo
-                            {
-                                existingLabel.Foreground = Brushes.Black;  // Vaihtaa tekstin värin mustaksi
-                            }
-                            else // lisätään liikkumis mahdollisuus pallo
-                            {
-                                existingLabel.Foreground = Brushes.Red;  // Vaihtaa tekstin värin punaiseksi
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         public List<string> Pawn_Movement(string color, string pieceLocation)
@@ -160,7 +100,7 @@ namespace Chess
                     ableToMove.Add($"{chars}{num + 1}");
                 }
             }
-           
+
             return ableToMove;
         }
 
@@ -176,66 +116,101 @@ namespace Chess
             int alphabetNum = Array.IndexOf(alphabet, chars);
 
             List<string> ableToMove = new List<string>();
+            ableToEat = new List<string>();
 
-            if (color == "Black")
+            var con = true;
+            for (int i = 1; i < alphabetNum + 1 && con; i++)
             {
-                for (int i = 1; i < alphabetNum + 1; i++)
+                if (num - i <= 8 && num - i >= 1 && alphabetNum - i >= 0 && alphabetNum - i <= 7)
                 {
-                    if (num - i <= 8 && num - i >= 1 && alphabetNum - i >= 0 && alphabetNum - i <= 7)
+                    string move = ($"{alphabet[alphabetNum - i]}{num - i}");
+                    bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
+                    bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
+
+                    if (!blackMoveChanceHit && !whiteMoveChanceHit)
                     {
-                        ableToMove.Add($"{alphabet[alphabetNum - i]}{num - i}");
+                        ableToMove.Add(move);
                     }
-                }
-                for (int i = 1; i < 8 - alphabetNum; i++)
-                {
-                    if (num - i <= 8 && num - i >= 1 && alphabetNum + i >= 0 && alphabetNum + i <= 7)
+                    else
                     {
-                        ableToMove.Add($"{alphabet[alphabetNum + i]}{num - i}");
-                    }
-                }
-                for (int i = 1; i < alphabetNum + 1; i++)
-                {
-                    if (num + i <= 8 && num + i >= 1 && alphabetNum - i >= 0 && alphabetNum - i <= 7)
-                    {
-                        ableToMove.Add($"{alphabet[alphabetNum - i]}{num + i}");
-                    }
-                }
-                for (int i = 1; i < 8 - alphabetNum; i++)
-                {
-                    if (num + i <= 8 && num + i >= 1 && alphabetNum + i >= 0 && alphabetNum + i <= 7)
-                    {
-                        ableToMove.Add($"{alphabet[alphabetNum + i]}{num + i}");
+                        if ((color == "White" && blackMoveChanceHit) || (color == "Black" && whiteMoveChanceHit))
+                        {
+                            ableToEat.Add($"{move}");
+                        }
+
+                        con = false;
                     }
                 }
             }
-            else
+            con = true;
+            for (int i = 1; i < 8 - alphabetNum && con; i++)
             {
-                for (int i = 1; i < alphabetNum + 1; i++)
+                if (num - i <= 8 && num - i >= 1 && alphabetNum + i >= 0 && alphabetNum + i <= 7)
                 {
-                    if (num - i <= 8 && num - i >= 1 && alphabetNum - i >= 0 && alphabetNum - i <= 7)
+                    string move = ($"{alphabet[alphabetNum + i]}{num - i}");
+                    bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
+                    bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
+
+                    if (!blackMoveChanceHit && !whiteMoveChanceHit)
                     {
-                        ableToMove.Add($"{alphabet[alphabetNum - i]}{num - i}");
+                        ableToMove.Add(move);
+                    }
+                    else
+                    {
+                        if ((color == "White" && blackMoveChanceHit) || (color == "Black" && whiteMoveChanceHit))
+                        {
+                            ableToMove.Add(move);
+                        }
+
+                        con = false;
                     }
                 }
-                for (int i = 1; i < 8 - alphabetNum; i++)
+            }
+            con = true;
+            for (int i = 1; i < alphabetNum + 1 && con; i++)
+            {
+                if (num + i <= 8 && num + i >= 1 && alphabetNum - i >= 0 && alphabetNum - i <= 7)
                 {
-                    if (num - i <= 8 && num - i >= 1 && alphabetNum + i >= 0 && alphabetNum + i <= 7)
+                    string move = ($"{alphabet[alphabetNum - i]}{num + i}");
+                    bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
+                    bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
+
+                    if (!blackMoveChanceHit && !whiteMoveChanceHit)
                     {
-                        ableToMove.Add($"{alphabet[alphabetNum + i]}{num - i}");
+                        ableToMove.Add(move);
+                    }
+                    else
+                    {
+                        if ((color == "White" && blackMoveChanceHit) || (color == "Black" && whiteMoveChanceHit))
+                        {
+                            ableToMove.Add(move);
+                        }
+
+                        con = false;
                     }
                 }
-                for (int i = 1; i < alphabetNum + 1; i++)
+            }
+            con = true;
+            for (int i = 1; i < 8 - alphabetNum && con; i++)
+            {
+                if (num + i <= 8 && num + i >= 1 && alphabetNum + i >= 0 && alphabetNum + i <= 7)
                 {
-                    if (num + i <= 8 && num + i >= 1 && alphabetNum - i >= 0 && alphabetNum - i <= 7)
+                    string move = ($"{alphabet[alphabetNum + i]}{num + i}");
+                    bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
+                    bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
+
+                    if (!blackMoveChanceHit && !whiteMoveChanceHit)
                     {
-                        ableToMove.Add($"{alphabet[alphabetNum - i]}{num + i}");
+                        ableToMove.Add(move);
                     }
-                }
-                for (int i = 1; i < 8 - alphabetNum; i++)
-                {
-                    if (num + i <= 8 && num + i >= 1 && alphabetNum + i >= 0 && alphabetNum + i <= 7)
+                    else
                     {
-                        ableToMove.Add($"{alphabet[alphabetNum + i]}{num + i}");
+                        if ((color == "White" && blackMoveChanceHit) || (color == "Black" && whiteMoveChanceHit))
+                        {
+                            ableToMove.Add(move);
+                        }
+
+                        con = false;
                     }
                 }
             }
@@ -517,7 +492,7 @@ namespace Chess
 
                 if (alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
                 {
-                    ableToMove.Add($"{alphabet[alphabetNum - 1]}{num }");
+                    ableToMove.Add($"{alphabet[alphabetNum - 1]}{num}");
                 }
             }
 
@@ -688,15 +663,77 @@ namespace Chess
             }
             return ableToMoves;
         }
-        
-        /*private void ChessBoard_MouseMove(object sender, MouseEventArgs e)
-        {
-            // Hae hiiren sijainti suhteessa lautaan
-            System.Windows.Point pos = e.GetPosition(chessBoard);
 
-            // Siirrä labelin paikkaa hiiren mukaan
-            Canvas.SetLeft(followLabel, pos.X - followLabel.ActualWidth / 2);
-            Canvas.SetTop(followLabel, pos.Y - followLabel.ActualHeight / 2);
-        }*/
+        public void MoveChangeVisualCreate(string color, string remove)
+        {
+            foreach (var move in ableToMoves)
+            {
+                // katsoo ruudun paikan johon laitetaan label
+                Border border = chessBoard.FindName(move) as Border;
+
+                // katsoo onko ruudun paikalla valmiiksi jo joku nappula
+                bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
+                bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
+
+                Label label = new Label();
+
+                if (remove == "true") // poistetaan liikkumis mahdollisuus pallo
+                {
+                    label.Content = "";
+
+                    border.Child = label;
+                }
+                else // lisätään liikkumis mahdollisuus pallo
+                {
+                    label.FontSize = 30;
+                    label.Content = "●";
+                    label.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#7f7f7f"));
+                    label.Opacity = 0.5;
+                    label.HorizontalAlignment = HorizontalAlignment.Center;
+                    label.VerticalAlignment = VerticalAlignment.Center;
+
+                    border.Child = label;
+
+                }
+
+                foreach (var piece in ableToEat)
+                {
+                    Border border1 = chessBoard.FindName(piece) as Border;
+
+                    if (ableToEat.Count() >= 1)
+                    {
+
+                        if (color == "Black" && blackMoveChanceHit == false) // katsoo jos painetun nappulan väri on musta ja ettei ruudulla ole mustaa nappulaa
+                        {
+                            if (border1.Child is Label existingLabel)
+                            {
+                                if (remove == "true") // poistetaan liikkumis mahdollisuus pallo
+                                {
+                                    existingLabel.Foreground = Brushes.White;  // Vaihtaa tekstin värin valkoiseksi
+                                }
+                                else // lisätään liikkumis mahdollisuus pallo
+                                {
+                                    existingLabel.Foreground = Brushes.Red;  // Vaihtaa tekstin värin punaiseksi
+                                }
+                            }
+                        }
+                        else if (color == "White" && whiteMoveChanceHit == false) // katsoo jos painetun nappulan väri on valkoinen ja ettei ruudulla ole valkoista nappulaa
+                        {
+                            if (border1.Child is Label existingLabel)
+                            {
+                                if (remove == "true") // poistetaan liikkumis mahdollisuus pallo
+                                {
+                                    existingLabel.Foreground = Brushes.Black;  // Vaihtaa tekstin värin mustaksi
+                                }
+                                else // lisätään liikkumis mahdollisuus pallo
+                                {
+                                    existingLabel.Foreground = Brushes.Red;  // Vaihtaa tekstin värin punaiseksi
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
