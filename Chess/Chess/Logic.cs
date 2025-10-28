@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -23,6 +22,13 @@ namespace Chess
         List<string> ableToMove;
         List<string> ableToEat;
 
+
+        private Piece draggedPiece;
+        private bool isDragging = false;
+
+
+        public Point position { get; set; }
+
         public Logic(Grid grid, List<Piece> blackPieces, List<Piece> whitePieces)
         {
             chessBoard = grid;
@@ -32,6 +38,7 @@ namespace Chess
 
         public void Piece_Clicked(string clickedPiece)
         {
+            position = position;
             string color = clickedPiece.Split('_')[0];
             string piece = clickedPiece.Split('_')[1];
             string pieceLocation = clickedPiece.Split('_')[2];
@@ -43,13 +50,14 @@ namespace Chess
             {
                 remove = clickedPiece.Split('_')[3];
 
-                PressedPiece(color, pieceLocation, piece);
-                MoveChangeVisualCreate(color, remove);
             }
             catch
             {
 
             }
+
+            PressedPiece(color, pieceLocation, piece);
+            MoveChangeVisualCreate(color, remove);
         }
 
         public List<string> Pawn_Movement(string color, string pieceLocation)
@@ -604,5 +612,35 @@ namespace Chess
 
             return con;
         }
+
+        public void StartDragging()
+        {
+
+
+            draggedPiece = piece;
+            isDragging = true;
+        }
+
+        public void StopDragging()
+        {
+            draggedPiece = null;
+            isDragging = false;
+        }
+
+        public void UpdateDraggedPiecePosition()
+        {
+            if (!isDragging || draggedPiece == null) return;
+
+            // Päivitä nappulan sijainti hiiren koordinaatin perusteella
+            UIElement pieceElement = chessBoard.FindName(draggedPiece.name) as UIElement;
+            if (pieceElement is Image img)
+            {
+                double x = position.X - img.Width / 2;
+                double y = position.Y - img.Height / 2;
+
+                img.Margin = new Thickness(x, y, 0, 0);
+            }
+        }
+
     }
 }

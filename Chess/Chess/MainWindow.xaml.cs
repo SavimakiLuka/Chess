@@ -18,28 +18,40 @@ namespace Chess
     {
         List<Piece> blackPieces = new List<Piece>();
         List<Piece> whitePieces = new List<Piece>();
+
+        Logic logic;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            // Luo lauta ja nappulat
             Board board = new Board(ChessBoard);
             Pieces pieces = new Pieces();
+            logic = new Logic(ChessBoard, blackPieces, whitePieces);
+
             board.CreateBoard();
             whitePieces = pieces.AddWhitePieces();
             blackPieces = pieces.AddBlackPieces();
             board.AddPiecesToBoard(blackPieces, whitePieces);
 
+
         }
 
         private void MouseMoveHandler(object sender, MouseEventArgs e)
         {
-            // Get the x and y coordinates of the mouse pointer.
-            System.Windows.Point position = e.GetPosition(this);
-            double pX = position.X;
-            double pY = position.Y;
+            // Haetaan hiiren sijainti päägridin koordinaateissa
+            Point position = e.GetPosition(ChessBoard);
+            /*
+            // Päivitetään ellipsin paikka keskitetysti hiiren ympärille
+            ok.Margin = new Thickness(
+                position.X - ok.Width / 2,
+                position.Y - ok.Height / 2,
+                0, 0);*/
+            if (logic == null) return;
 
-            // Sets the Height/Width of the circle to the mouse coordinates.
-            ok.Width = pX;
-            ok.Height = pY;
+            logic.position = position;
+            logic.UpdateDraggedPiecePosition();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -143,11 +143,16 @@ namespace Chess
                 }
             }
         }
+
+
         public void Piece_Click(object sender, EventArgs e)
         {
             Logic logic = new Logic(chessBoard, blackPiecesInfo, whitePiecesInfo);
             string name = $"{((Label)sender).Name}_false";
+
             logic.Piece_Clicked(name);
+
+            logic.StartDragging(name);
         }
 
         public void Piece_UnClick(object sender, EventArgs e)
@@ -155,6 +160,8 @@ namespace Chess
             Logic logic = new Logic(chessBoard, blackPiecesInfo, whitePiecesInfo);
             string name = $"{((Label)sender).Name}_true";
             logic.Piece_Clicked(name);
+
+            logic.StopDragging();
         }
 
         private void ChessBoard_MouseDown(object sender, MouseButtonEventArgs e)
@@ -162,5 +169,6 @@ namespace Chess
             Point pos = e.GetPosition(chessBoard);
             MessageBox.Show($"Klikkasit kohtaa X={pos.X}, Y={pos.Y}");
         }
+     
     }
 }

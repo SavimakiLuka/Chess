@@ -6,10 +6,9 @@
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Background="DarkKhaki">
-    
+
     <Grid x:Name="ChessBoard" MouseMove="MouseMoveHandler">
-        <Ellipse Name="ok" Fill="LightBlue" 
-             Width="100" Height="100"/>
+
         <Border BorderThickness="5" Width="405" Height="405" BorderBrush="Black" />
     </Grid>
 </Window>
