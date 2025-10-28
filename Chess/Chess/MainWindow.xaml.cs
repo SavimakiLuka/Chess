@@ -30,6 +30,18 @@ namespace Chess
 
         }
 
+        private void MouseMoveHandler(object sender, MouseEventArgs e)
+        {
+            // Get the x and y coordinates of the mouse pointer.
+            System.Windows.Point position = e.GetPosition(this);
+            double pX = position.X;
+            double pY = position.Y;
+
+            // Sets the Height/Width of the circle to the mouse coordinates.
+            ok.Width = pX;
+            ok.Height = pY;
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             

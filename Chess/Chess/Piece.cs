@@ -13,6 +13,5 @@ namespace Chess
         public string Location {  get; set; }
         public string Emoji { get; set; }
 
-/*        public string movingPattern { get; set; }
-*/    }
+    }
 }
