@@ -22,12 +22,8 @@ namespace Chess
         List<string> ableToMove;
         List<string> ableToEat;
 
-
-        private Piece draggedPiece;
-        private bool isDragging = false;
-
-
-        public Point position { get; set; }
+        Label draggedLabel = null;
+        Point position = new Point();
 
         public Logic(Grid grid, List<Piece> blackPieces, List<Piece> whitePieces)
         {
@@ -36,9 +32,9 @@ namespace Chess
             whitePiecesInfo = whitePieces;
         }
 
-        public void Piece_Clicked(string clickedPiece)
+        public void Piece_Clicked(string clickedPiece, Label clickedLabel)
         {
-            position = position;
+            draggedLabel = clickedLabel;
             string color = clickedPiece.Split('_')[0];
             string piece = clickedPiece.Split('_')[1];
             string pieceLocation = clickedPiece.Split('_')[2];
@@ -73,6 +69,8 @@ namespace Chess
 
             ableToMove = new List<string>();
             ableToEat = new List<string>();
+
+            chessBoard.MouseMove += ChessBoard_MouseMove;
 
             if (color == "Black")
             {
@@ -132,6 +130,7 @@ namespace Chess
 
             return ableToMove;
         }
+
 
         public List<string> Bishop_Movement(string color, string pieceLocation)
         {
@@ -613,34 +612,15 @@ namespace Chess
             return con;
         }
 
-        public void StartDragging()
+        private void ChessBoard_MouseMove(object sender, MouseEventArgs e)
         {
-
-
-            draggedPiece = piece;
-            isDragging = true;
-        }
-
-        public void StopDragging()
-        {
-            draggedPiece = null;
-            isDragging = false;
-        }
-
-        public void UpdateDraggedPiecePosition()
-        {
-            if (!isDragging || draggedPiece == null) return;
-
-            // Päivitä nappulan sijainti hiiren koordinaatin perusteella
-            UIElement pieceElement = chessBoard.FindName(draggedPiece.name) as UIElement;
-            if (pieceElement is Image img)
+            if (draggedLabel != null)
             {
-                double x = position.X - img.Width / 2;
-                double y = position.Y - img.Height / 2;
-
-                img.Margin = new Thickness(x, y, 0, 0);
+                Point position = e.GetPosition(chessBoard);
+                draggedLabel.Padding = new Thickness(position.X / 10, position.Y / 10, 0, 0);
+                draggedLabel.HorizontalAlignment = HorizontalAlignment.Left;
+                draggedLabel.VerticalAlignment = VerticalAlignment.Top;
             }
         }
-
     }
 }

@@ -19,7 +19,7 @@ namespace Chess
         List<Piece> blackPieces = new List<Piece>();
         List<Piece> whitePieces = new List<Piece>();
 
-        Logic logic;
+        Point position = new Point();
 
         public MainWindow()
         {
@@ -28,7 +28,6 @@ namespace Chess
             // Luo lauta ja nappulat
             Board board = new Board(ChessBoard);
             Pieces pieces = new Pieces();
-            logic = new Logic(ChessBoard, blackPieces, whitePieces);
 
             board.CreateBoard();
             whitePieces = pieces.AddWhitePieces();
@@ -41,18 +40,18 @@ namespace Chess
         private void MouseMoveHandler(object sender, MouseEventArgs e)
         {
             // Haetaan hiiren sijainti päägridin koordinaateissa
-            Point position = e.GetPosition(ChessBoard);
+            position = e.GetPosition(ChessBoard);
+
             /*
             // Päivitetään ellipsin paikka keskitetysti hiiren ympärille
             ok.Margin = new Thickness(
                 position.X - ok.Width / 2,
                 position.Y - ok.Height / 2,
                 0, 0);*/
-            if (logic == null) return;
 
-            logic.position = position;
-            logic.UpdateDraggedPiecePosition();
-        }
+/*            logic.position = position;
+*//*            logic.UpdateDraggedPiecePosition();
+*/        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

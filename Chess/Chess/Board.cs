@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Reflection;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -129,8 +130,6 @@ namespace Chess
                     label.MouseLeftButtonDown += Piece_Click;
                     label.MouseLeftButtonUp += Piece_UnClick;
 
-                    label.MouseLeftButtonUp += ChessBoard_MouseDown;
-
 
                     if (a1Border.Child == null)
                     {
@@ -144,31 +143,22 @@ namespace Chess
             }
         }
 
-
         public void Piece_Click(object sender, EventArgs e)
         {
             Logic logic = new Logic(chessBoard, blackPiecesInfo, whitePiecesInfo);
             string name = $"{((Label)sender).Name}_false";
+            Label clickedLabel = sender as Label;
 
-            logic.Piece_Clicked(name);
-
-            logic.StartDragging(name);
+            logic.Piece_Clicked(name, clickedLabel);
         }
 
         public void Piece_UnClick(object sender, EventArgs e)
         {
             Logic logic = new Logic(chessBoard, blackPiecesInfo, whitePiecesInfo);
             string name = $"{((Label)sender).Name}_true";
-            logic.Piece_Clicked(name);
+            Label clickedLabel = sender as Label;
 
-            logic.StopDragging();
+            logic.Piece_Clicked(name, clickedLabel);
         }
-
-        private void ChessBoard_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Point pos = e.GetPosition(chessBoard);
-            MessageBox.Show($"Klikkasit kohtaa X={pos.X}, Y={pos.Y}");
-        }
-     
     }
 }
