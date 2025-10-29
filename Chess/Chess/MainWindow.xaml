@@ -7,8 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Background="DarkKhaki">
 
-    <Grid x:Name="ChessBoard" MouseMove="MouseMoveHandler">
-        <Label x:Name="pressedPiece" Panel.ZIndex="100" Width="50" Height="50">empty</Label>
-        <Border BorderThickness="5" Width="405" Height="405" BorderBrush="Black" />
+    <Grid x:Name="Board" MouseMove="MouseMoveHandler" Width="400" Height="400">
+        <Grid x:Name="ChessBoard">
+            
+        </Grid>
+        <Canvas x:Name="OverlayCanvas" Panel.ZIndex="100" IsHitTestVisible="False" Width="400" Height="400">
+            <Label x:Name="pressedPiece" Panel.ZIndex="100" Width="50" Height="50" FontSize="40">♙</Label>
+        </Canvas>
+            <Border BorderThickness="5" Width="405" Height="405" BorderBrush="Black" />
     </Grid>
 </Window>

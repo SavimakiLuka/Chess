@@ -90,6 +90,7 @@ namespace Chess
                         ShadowDepth = 1,           // suoraan emojiin ympärille
                         Opacity = 1
                     };
+                    Panel.SetZIndex(label, 2);
 
                     label.MouseLeftButtonDown += Piece_Click;
                     label.MouseLeftButtonUp += Piece_UnClick;
@@ -129,6 +130,7 @@ namespace Chess
                         ShadowDepth = 1,           // suoraan emojiin ympärille
                         Opacity = 1
                     };
+                    Panel.SetZIndex(label, 2);
 
                     label.MouseLeftButtonDown += Piece_Click;
                     label.MouseLeftButtonUp += Piece_UnClick;

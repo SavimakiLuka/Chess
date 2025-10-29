@@ -25,6 +25,7 @@ namespace Chess
 
         Label draggedLabel = null;
         Point position = new Point();
+        bool followMouse = false;
         public Point clickedPosition { get; set; }
 
         public Logic(Grid grid, List<Piece> blackPieces, List<Piece> whitePieces, Label pressedpiece)
@@ -41,22 +42,32 @@ namespace Chess
             string color = clickedPiece.Split('_')[0];
             string piece = clickedPiece.Split('_')[1];
             string pieceLocation = clickedPiece.Split('_')[2];
-            string remove = "";
+            string unClickCheck = "";
+            bool unClick = false;
             ableToMoves = new List<string>();
             ableToEat = new List<string>();
 
             try
             {
-                remove = clickedPiece.Split('_')[3];
+                unClickCheck = clickedPiece.Split('_')[3];
 
+                if (unClickCheck == "true")
+                {
+                    unClick = true;
+                }
+                else
+                {
+                    unClick = false;
+                }
             }
             catch
             {
 
             }
 
+            PieceOpacity(unClick);
             PressedPiece(color, pieceLocation, piece);
-            MoveChangeVisualCreate(color, remove);
+            MoveChangeVisualCreate(color, unClick);
         }
 
         public List<string> Pawn_Movement(string color, string pieceLocation)
@@ -526,7 +537,7 @@ namespace Chess
             return ableToMoves;
         }
 
-        public void MoveChangeVisualCreate(string color, string remove)
+        public void MoveChangeVisualCreate(string color, bool unClick)
         {
             foreach (var move in ableToMoves)
             {
@@ -539,7 +550,7 @@ namespace Chess
 
                 Label label = new Label();
 
-                if (remove == "true") // poistetaan liikkumis mahdollisuus pallo
+                if (unClick) // poistetaan liikkumis mahdollisuus pallo
                 {
                     label.Content = "";
 
@@ -566,7 +577,7 @@ namespace Chess
                 {
                     if (border1.Child is Label existingLabel)
                     {
-                        if (remove == "true") // poistetaan liikkumis mahdollisuus pallo
+                        if (unClick) // poistetaan liikkumis mahdollisuus pallo
                         {
                             existingLabel.Foreground = Brushes.Black;  // Vaihtaa tekstin värin mustaksi
                         }
@@ -580,7 +591,7 @@ namespace Chess
                 {
                     if (border1.Child is Label existingLabel)
                     {
-                        if (remove == "true") // poistetaan liikkumis mahdollisuus pallo
+                        if (unClick) // poistetaan liikkumis mahdollisuus pallo
                         {
                             existingLabel.Foreground = Brushes.White;  // Vaihtaa tekstin värin mustaksi
                         }
@@ -617,13 +628,31 @@ namespace Chess
 
         private void ChessBoard_MouseMove(object sender, MouseEventArgs e)
         {
-            if (draggedLabel != null)
+            if (draggedLabel != null && followMouse)
             {
                 draggedLabel.Opacity = 0.3;
                 Point position = e.GetPosition(chessBoard);
-                pressedPiece.Padding = new Thickness(position.X - clickedPosition.X, position.Y - clickedPosition.Y, 0, 0);
+                /*pressedPiece.Padding = new Thickness(position.X - clickedPosition.X, position.Y - clickedPosition.Y, 0, 0);
                 pressedPiece.HorizontalAlignment = HorizontalAlignment.Left;
-                pressedPiece.VerticalAlignment = VerticalAlignment.Top;
+                pressedPiece.VerticalAlignment = VerticalAlignment.Top;*/
+
+                Canvas.SetLeft(pressedPiece, position.X);
+                Canvas.SetTop(pressedPiece, position.Y);
+            }
+        }
+
+        private void PieceOpacity(bool unClick)
+        {
+
+            if (unClick) 
+            {
+                draggedLabel.Opacity = 1;
+                followMouse = false;
+            }
+            else 
+            {
+                draggedLabel.Opacity = 0.3;
+                followMouse = true;
             }
         }
     }
