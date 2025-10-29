@@ -12,12 +12,14 @@ namespace Chess
     class Board
     {
         private Grid chessBoard;
+        private Label pressedPiece;
         List<Piece> blackPiecesInfo = new();
         List<Piece> whitePiecesInfo = new();
 
-        public Board(Grid grid)
+        public Board(Grid grid, Label pressedpiece)
         {
             chessBoard = grid;
+            pressedPiece = pressedpiece;
         }
 
         public void CreateBoard()
@@ -51,6 +53,7 @@ namespace Chess
                         ? (SolidColorBrush)(new BrushConverter().ConvertFrom("#DEDEDE"))  // vaalea ruutu, lähes valkoinen
                         : (SolidColorBrush)(new BrushConverter().ConvertFrom("#141414"));
                     square.Name = $"{boardAlphabet[col]}{rows - row}";
+                    Panel.SetZIndex(square, 0);
 
                     chessBoard.RegisterName(square.Name, square);
 
@@ -143,18 +146,21 @@ namespace Chess
             }
         }
 
-        public void Piece_Click(object sender, EventArgs e)
+        public void Piece_Click(object sender, MouseButtonEventArgs e)
         {
-            Logic logic = new Logic(chessBoard, blackPiecesInfo, whitePiecesInfo);
+            Logic logic = new Logic(chessBoard, blackPiecesInfo, whitePiecesInfo, pressedPiece);
             string name = $"{((Label)sender).Name}_false";
             Label clickedLabel = sender as Label;
+
+            Point pos = e.GetPosition(chessBoard);
+            logic.clickedPosition = pos;
 
             logic.Piece_Clicked(name, clickedLabel);
         }
 
         public void Piece_UnClick(object sender, EventArgs e)
         {
-            Logic logic = new Logic(chessBoard, blackPiecesInfo, whitePiecesInfo);
+            Logic logic = new Logic(chessBoard, blackPiecesInfo, whitePiecesInfo, pressedPiece);
             string name = $"{((Label)sender).Name}_true";
             Label clickedLabel = sender as Label;
 

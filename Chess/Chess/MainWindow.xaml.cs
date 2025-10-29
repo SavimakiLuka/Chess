@@ -26,7 +26,7 @@ namespace Chess
             InitializeComponent();
 
             // Luo lauta ja nappulat
-            Board board = new Board(ChessBoard);
+            Board board = new Board(ChessBoard, pressedPiece);
             Pieces pieces = new Pieces();
 
             board.CreateBoard();

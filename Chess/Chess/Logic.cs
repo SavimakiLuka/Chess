@@ -15,6 +15,7 @@ namespace Chess
     internal class Logic
     {
         private Grid chessBoard;
+        private Label pressedPiece;
         string[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H" };
         List<Piece> blackPiecesInfo = new();
         List<Piece> whitePiecesInfo = new();
@@ -24,12 +25,14 @@ namespace Chess
 
         Label draggedLabel = null;
         Point position = new Point();
+        public Point clickedPosition { get; set; }
 
-        public Logic(Grid grid, List<Piece> blackPieces, List<Piece> whitePieces)
+        public Logic(Grid grid, List<Piece> blackPieces, List<Piece> whitePieces, Label pressedpiece)
         {
             chessBoard = grid;
             blackPiecesInfo = blackPieces;
             whitePiecesInfo = whitePieces;
+            pressedPiece = pressedpiece;
         }
 
         public void Piece_Clicked(string clickedPiece, Label clickedLabel)
@@ -616,10 +619,11 @@ namespace Chess
         {
             if (draggedLabel != null)
             {
+                draggedLabel.Opacity = 0.3;
                 Point position = e.GetPosition(chessBoard);
-                draggedLabel.Padding = new Thickness(position.X / 10, position.Y / 10, 0, 0);
-                draggedLabel.HorizontalAlignment = HorizontalAlignment.Left;
-                draggedLabel.VerticalAlignment = VerticalAlignment.Top;
+                pressedPiece.Padding = new Thickness(position.X - clickedPosition.X, position.Y - clickedPosition.Y, 0, 0);
+                pressedPiece.HorizontalAlignment = HorizontalAlignment.Left;
+                pressedPiece.VerticalAlignment = VerticalAlignment.Top;
             }
         }
     }
