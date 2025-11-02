@@ -12,7 +12,7 @@
             
         </Grid>
         <Canvas x:Name="OverlayCanvas" Panel.ZIndex="100" IsHitTestVisible="False" Width="400" Height="400">
-            <Label x:Name="pressedPiece" Panel.ZIndex="100" Width="50" Height="50" FontSize="40">♙</Label>
+            <Label x:Name="pressedPiece" Panel.ZIndex="100" Width="50" Height="50" FontSize="40"></Label>
         </Canvas>
             <Border BorderThickness="5" Width="405" Height="405" BorderBrush="Black" />
     </Grid>

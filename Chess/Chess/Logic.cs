@@ -47,27 +47,24 @@ namespace Chess
             ableToMoves = new List<string>();
             ableToEat = new List<string>();
 
-            try
-            {
-                unClickCheck = clickedPiece.Split('_')[3];
+            unClickCheck = clickedPiece.Split('_')[3];
 
-                if (unClickCheck == "true")
-                {
-                    unClick = true;
-                }
-                else
-                {
-                    unClick = false;
-                }
-            }
-            catch
+            if (unClickCheck == "true")
             {
-
+                unClick = true;
             }
+            else
+            {
+                unClick = false;
+            }
+
+            chessBoard.MouseMove += ChessBoard_MouseMove;
 
             PieceOpacity(unClick);
+            MouseMoveVisual(unClick, clickedLabel);
             PressedPiece(color, pieceLocation, piece);
             MoveChangeVisualCreate(color, unClick);
+            IfCursorOnLabel(unClick);
         }
 
         public List<string> Pawn_Movement(string color, string pieceLocation)
@@ -145,7 +142,6 @@ namespace Chess
             return ableToMove;
         }
 
-
         public List<string> Bishop_Movement(string color, string pieceLocation)
         {
             int possibleLocations = 0;
@@ -156,6 +152,7 @@ namespace Chess
             int num = Int32.Parse(pieceLocation.Substring(index));
 
             int alphabetNum = Array.IndexOf(alphabet, chars);
+
 
             ableToMove = new List<string>();
             ableToEat = new List<string>();
@@ -630,14 +627,10 @@ namespace Chess
         {
             if (draggedLabel != null && followMouse)
             {
-                draggedLabel.Opacity = 0.3;
                 Point position = e.GetPosition(chessBoard);
-                /*pressedPiece.Padding = new Thickness(position.X - clickedPosition.X, position.Y - clickedPosition.Y, 0, 0);
-                pressedPiece.HorizontalAlignment = HorizontalAlignment.Left;
-                pressedPiece.VerticalAlignment = VerticalAlignment.Top;*/
 
-                Canvas.SetLeft(pressedPiece, position.X);
-                Canvas.SetTop(pressedPiece, position.Y);
+                Canvas.SetLeft(pressedPiece, position.X - 25);
+                Canvas.SetTop(pressedPiece, position.Y - 30);
             }
         }
 
@@ -654,6 +647,64 @@ namespace Chess
                 draggedLabel.Opacity = 0.3;
                 followMouse = true;
             }
+        }
+
+        private void MouseMoveVisual(bool unClick, Label clickedLabel)
+        {
+            clickedLabel.MouseLeftButtonUp += Piece_UnClick;
+            if (!unClick)
+            {
+                pressedPiece.Foreground = clickedLabel.Foreground;
+                pressedPiece.Effect = clickedLabel.Effect;
+                pressedPiece.Content = clickedLabel.Content;
+            }
+            else
+            {
+                pressedPiece.Content = "";
+            }         
+        }
+
+        public void IfCursorOnLabel(bool unClick)
+        {
+            if (unClick)
+            {
+                foreach (var move in ableToMoves)
+                {
+                    // katsoo ruudun paikan johon laitetaan label
+                    Border border = chessBoard.FindName(move) as Border;
+
+                    Point pos = border.TransformToAncestor(chessBoard).Transform(new Point(0, 0));
+
+                    // katsoo onko ruudun paikalla valmiiksi jo joku nappula
+                    bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
+                    bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
+
+                    Label label = new Label();
+
+                    label.FontSize = pressedPiece.FontSize;
+                    label.Content = pressedPiece.Content;
+                    label.Foreground = pressedPiece.Foreground;
+                    label.HorizontalAlignment = HorizontalAlignment.Center;
+                    label.VerticalAlignment = VerticalAlignment.Center;
+
+                    border.Child = label;
+                }
+            }
+        }
+
+        private void CursorChange(string cursorType)
+        {
+            if (cursorType == "Hand")
+            {
+                
+            }
+        }
+
+        public void Piece_UnClick(object sender, MouseButtonEventArgs e)
+        {
+            string name = ((Label)sender).Name;
+            Label clickedLabel = sender as Label;
+            /*IfCursorOnLabel(unClick);*/
         }
     }
 }

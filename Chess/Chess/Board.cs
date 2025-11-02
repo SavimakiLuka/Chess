@@ -160,7 +160,7 @@ namespace Chess
             logic.Piece_Clicked(name, clickedLabel);
         }
 
-        public void Piece_UnClick(object sender, EventArgs e)
+        public void Piece_UnClick(object sender, MouseButtonEventArgs e)
         {
             Logic logic = new Logic(chessBoard, blackPiecesInfo, whitePiecesInfo, pressedPiece);
             string name = $"{((Label)sender).Name}_true";

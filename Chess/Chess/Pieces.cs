@@ -149,7 +149,7 @@ namespace Chess
                         {
                             color = colors[0],
                             name = piece,
-                            Emoji = "♟",
+                            Emoji = "♙",
                             Location = $"{alphabet[x]}7"
                         };
                         blackPieces.Add(pieceGet);
