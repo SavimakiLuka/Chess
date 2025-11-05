@@ -44,11 +44,8 @@ C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\bin\Debug\net8.0-windows\Chess.deps.
 C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\bin\Debug\net8.0-windows\Chess.runtimeconfig.json
 C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\bin\Debug\net8.0-windows\Chess.dll
 C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\bin\Debug\net8.0-windows\Chess.pdb
-C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\obj\Debug\net8.0-windows\MainWindow.g.cs
-C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\obj\Debug\net8.0-windows\App.g.cs
 C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\obj\Debug\net8.0-windows\Chess_MarkupCompile.cache
 C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\obj\Debug\net8.0-windows\Chess_MarkupCompile.lref
-C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\obj\Debug\net8.0-windows\MainWindow.baml
 C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\obj\Debug\net8.0-windows\Chess.g.resources
 C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\obj\Debug\net8.0-windows\Chess.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\obj\Debug\net8.0-windows\Chess.AssemblyInfoInputs.cache
@@ -60,3 +57,6 @@ C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\obj\Debug\net8.0-windows\refint\Ches
 C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\obj\Debug\net8.0-windows\Chess.pdb
 C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\obj\Debug\net8.0-windows\Chess.genruntimeconfig.cache
 C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\obj\Debug\net8.0-windows\ref\Chess.dll
+C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\obj\Debug\net8.0-windows\View\MainWindow.g.cs
+C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\obj\Debug\net8.0-windows\View\App.g.cs
+C:\Users\lukas\Desktop\C#\Chess\Chess\Chess\obj\Debug\net8.0-windows\View\MainWindow.baml

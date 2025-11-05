@@ -15,4 +15,12 @@
     <Page Remove="Pieces\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Remove="View\App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Include="View\App.xaml" />
+  </ItemGroup>
+
 </Project>

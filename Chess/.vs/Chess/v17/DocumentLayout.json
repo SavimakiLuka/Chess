@@ -3,28 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|c:\\users\\lukas\\desktop\\c#\\chess\\chess\\chess\\board.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|solutionrelative:chess\\board.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|c:\\users\\lukas\\desktop\\c#\\chess\\chess\\chess\\model\\logic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|solutionrelative:chess\\model\\logic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|c:\\users\\lukas\\desktop\\c#\\chess\\chess\\chess\\logic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|solutionrelative:chess\\logic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|c:\\users\\lukas\\desktop\\c#\\chess\\chess\\chess\\view\\uibuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|solutionrelative:chess\\view\\uibuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|c:\\users\\lukas\\desktop\\c#\\chess\\chess\\chess\\pieces.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|solutionrelative:chess\\pieces.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|c:\\users\\lukas\\desktop\\c#\\chess\\chess\\chess\\viewmodel\\chessviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|solutionrelative:chess\\viewmodel\\chessviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|c:\\users\\lukas\\desktop\\c#\\chess\\chess\\chess\\piece.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|solutionrelative:chess\\piece.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|c:\\users\\lukas\\desktop\\c#\\chess\\chess\\chess\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|solutionrelative:chess\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|c:\\users\\lukas\\desktop\\c#\\chess\\chess\\chess\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|solutionrelative:chess\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|c:\\users\\lukas\\desktop\\c#\\chess\\chess\\chess\\view\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67630BD6-B36F-4394-9C2C-A95549ACBA08}|Chess\\Chess.csproj|solutionrelative:chess\\view\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,80 +26,59 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "Chess\\MainWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\MainWindow.xaml.cs",
-              "RelativeToolTip": "Chess\\MainWindow.xaml.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAnwBwAAAA+AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-20T16:20:07.437Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Piece.cs",
-              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\Piece.cs",
-              "RelativeDocumentMoniker": "Chess\\Piece.cs",
-              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\Piece.cs",
-              "RelativeToolTip": "Chess\\Piece.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\View\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "Chess\\View\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\View\\MainWindow.xaml.cs",
+              "RelativeToolTip": "Chess\\View\\MainWindow.xaml.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAUwB4AAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-23T10:08:50.89Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Logic.cs",
-              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\Logic.cs",
-              "RelativeDocumentMoniker": "Chess\\Logic.cs",
-              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\Logic.cs",
-              "RelativeToolTip": "Chess\\Logic.cs",
-              "ViewState": "AgIAAKkCAAAAAAAAAAArwMMCAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-21T16:04:25.191Z",
+              "WhenOpened": "2025-11-05T18:04:20.773Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "Chess\\MainWindow.xaml",
-              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\MainWindow.xaml",
-              "RelativeToolTip": "Chess\\MainWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-29T10:03:56.693Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Board.cs",
-              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\Board.cs",
-              "RelativeDocumentMoniker": "Chess\\Board.cs",
-              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\Board.cs",
-              "RelativeToolTip": "Chess\\Board.cs",
-              "ViewState": "AgIAAJUAAAAAAAAAAAAawKMAAAAIAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "UIBuilder.cs",
+              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\View\\UIBuilder.cs",
+              "RelativeDocumentMoniker": "Chess\\View\\UIBuilder.cs",
+              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\View\\UIBuilder.cs",
+              "RelativeToolTip": "Chess\\View\\UIBuilder.cs",
+              "ViewState": "AgIAAJUAAAAAAAAAAAAUwLQAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-20T16:42:22.287Z",
+              "WhenOpened": "2025-11-05T17:47:07.629Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Pieces.cs",
-              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\Pieces.cs",
-              "RelativeDocumentMoniker": "Chess\\Pieces.cs",
-              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\Pieces.cs",
-              "RelativeToolTip": "Chess\\Pieces.cs",
-              "ViewState": "AgIAAHwAAAAAAAAAAAAiwJcAAAAmAAAAAAAAAA==",
+              "Title": "ChessViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\ViewModel\\ChessViewModel.cs",
+              "RelativeDocumentMoniker": "Chess\\ViewModel\\ChessViewModel.cs",
+              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\ViewModel\\ChessViewModel.cs",
+              "RelativeToolTip": "Chess\\ViewModel\\ChessViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-23T07:08:17.585Z"
+              "WhenOpened": "2025-11-05T18:44:58.842Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Logic.cs",
+              "DocumentMoniker": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\Model\\Logic.cs",
+              "RelativeDocumentMoniker": "Chess\\Model\\Logic.cs",
+              "ToolTip": "C:\\Users\\lukas\\Desktop\\C#\\Chess\\Chess\\Chess\\Model\\Logic.cs",
+              "RelativeToolTip": "Chess\\Model\\Logic.cs",
+              "ViewState": "AgIAAAkCAAAAAAAAAAAYwKQBAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T16:04:25.191Z",
+              "EditorCaption": ""
             }
           ]
         }
