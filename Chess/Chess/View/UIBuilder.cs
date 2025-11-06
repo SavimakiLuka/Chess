@@ -14,15 +14,25 @@ namespace Chess.View
 {
     internal class UIBuilder
     {
-        Grid chessBoard;
-        Label pressedPiece;
+        Grid _chessBoard;
+        Label pressedPiece; // nappula jota painettiin
+        Label draggedPiece; // nappula joka liikkuu hiiren mukana
+
         List<Piece> blackPiecesInfo;
         List<Piece> whitePiecesInfo;
 
+        Point position = new Point();
+
+        bool mouseButtonDown;
+
+        ChessViewModel _chessViewModel;
+        Logic _logic;
+
         public UIBuilder(Grid board, Label _pressedPiece)
         {
-            chessBoard = board;
+            _chessBoard = board;
             pressedPiece = _pressedPiece;
+            draggedPiece = _pressedPiece;
         }
 
         public void DrawBoard(int boardSize)
@@ -104,8 +114,8 @@ namespace Chess.View
                     };
                     Panel.SetZIndex(label, 1);
 
-                    /*label.MouseLeftButtonDown += Piece_Click;
-                    label.MouseLeftButtonUp += Piece_UnClick;*/
+                    label.MouseLeftButtonDown += Piece_Click;
+                    label.MouseLeftButtonUp += Piece_UnClick;
 
                     squareBorder.Child = label;
                 }
@@ -137,8 +147,8 @@ namespace Chess.View
                     };
                     Panel.SetZIndex(label, 1);
 
-                    /*label.MouseLeftButtonDown += Piece_Click;
-                    label.MouseLeftButtonUp += Piece_UnClick;*/
+                    label.MouseLeftButtonDown += Piece_Click;
+                    label.MouseLeftButtonUp += Piece_UnClick;
 
                     squareBorder.Child = label;
                 }
@@ -147,12 +157,13 @@ namespace Chess.View
 
         public void PieceHandling(Label clickedLabel, string clickedPiece)
         {
+
             var pressedPiece = clickedLabel;
             var color = clickedPiece.Split('_')[0];
             var piece = clickedPiece.Split('_')[1];
             var pieceLocation = clickedPiece.Split('_')[2];
             var unClickCheck = "";
-            var mouseButtonDown = false;
+            mouseButtonDown = false;
             var ableToMoves = new List<string>();
             var ableToEat = new List<string>();
 
@@ -167,19 +178,26 @@ namespace Chess.View
                 mouseButtonDown = false;
             }
 
-            chessBoard.MouseMove += ChessBoard_MouseMove;
+            _chessViewModel = new(blackPiecesInfo, whitePiecesInfo, pressedPiece);
+            _logic = new(blackPiecesInfo, whitePiecesInfo, pressedPiece);
+
+            _chessBoard.MouseMove += ChessBoard_MouseMove;
 
             // Vaihtaa nappulan läpinäkyvyyttä kun sitä painetaan
-            ChangePieceOpacity(mouseButtonDown);
+            ChangePieceOpacity(mouseButtonDown, pressedPiece);
 
             // Asetetaan hiiren mukana liikkuvan nappulan näkö samaksi kuin painettu
-            SetDraggedPieceVisual(pressedLabel, draggedLabel, mouseButtonDown);
+            SetDraggedPieceVisual(pressedPiece, draggedPiece, mouseButtonDown);
 
             // Katsoo mitä nappulaa painettiin ja palauttaa listan mahdollisista liikkumis paikoista
-            ableToMoves = GetPressedPieceMovement(color, pieceLocation, piece);
+            ableToMoves = _chessViewModel.ReturnPossibleMovement(color, pieceLocation, piece);
 
-            // Jotain
-            MoveChangeVisualCreate(color);
+            // Katsoo mitä nappulaa painettiin ja palauttaa listan mahdollisista syömis paikoista
+            /*ableToEat = _chessViewModel.ReturnPossibleEatingPieces(color, pieceLocation, piece);*/
+            ableToEat = _logic.ableToEat;
+
+            // Luo lableit jotka näyttävät mihin nappula voi liikkua
+            CreateMovementPatterns(color, ableToMoves, ableToEat, mouseButtonDown);
         }
 
         private void SetDraggedPieceVisual(Label pressedPiece, Label draggedLabel, bool mouseButtonDown)
@@ -200,7 +218,7 @@ namespace Chess.View
         private void ChangePieceOpacity(bool mouseButtonDown, Label pressedPiece)
         {
 
-            if (mouseButtonDown)
+            if (!mouseButtonDown)
             {
                 pressedPiece.Opacity = 1;
             }
@@ -210,17 +228,104 @@ namespace Chess.View
             }
         }
 
+        private void ChessBoard_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (pressedPiece != null && mouseButtonDown)
+            {
+                position = e.GetPosition(_chessBoard);
+
+                SetDraggedPiecePosition();
+            }
+        }
+
+        private void SetDraggedPiecePosition()
+        {
+            Canvas.SetLeft(draggedPiece, position.X - 25);
+            Canvas.SetTop(draggedPiece, position.Y - 30);
+        }
+
+        public void CreateMovementPatterns(string color, List<string> ableToMoves, List<string> ableToEat, bool mouseButtonDown)
+        {
+            foreach (var move in ableToMoves)
+            {
+                // katsoo ruudun paikan johon laitetaan label
+                Border border = _chessBoard.FindName(move) as Border;
+
+                // katsoo onko ruudun paikalla valmiiksi jo joku nappula
+                bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
+                bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
+
+                Label label = new Label();
+
+                if (!mouseButtonDown) // poistetaan liikkumis mahdollisuus pallo
+                {
+                    label.Content = "";
+
+                    border.Child = label;
+                }
+                else // lisätään liikkumis mahdollisuus pallo
+                {
+                    label.FontSize = 30;
+                    label.Content = "●";
+                    label.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#7f7f7f");
+                    label.Opacity = 0.5;
+                    label.HorizontalAlignment = HorizontalAlignment.Center;
+                    label.VerticalAlignment = VerticalAlignment.Center;
+
+                    border.Child = label;
+                }
+            }
+
+            if (ableToEat != null)
+            {
+                foreach (var piece in ableToEat)
+                {
+                    Border border1 = _chessBoard.FindName(piece) as Border;
+
+                    if (color == "White")
+                    {
+                        if (border1.Child is Label existingLabel)
+                        {
+                            if (mouseButtonDown) // poistetaan liikkumis mahdollisuus pallo
+                            {
+                                existingLabel.Foreground = Brushes.Black;  // Vaihtaa tekstin värin mustaksi
+                            }
+                            else // lisätään liikkumis mahdollisuus pallo
+                            {
+                                existingLabel.Foreground = Brushes.Red;  // Vaihtaa tekstin värin punaiseksi
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (border1.Child is Label existingLabel)
+                        {
+                            if (mouseButtonDown) // poistetaan liikkumis mahdollisuus pallo
+                            {
+                                existingLabel.Foreground = Brushes.White;  // Vaihtaa tekstin värin mustaksi
+                            }
+                            else // lisätään liikkumis mahdollisuus pallo
+                            {
+                                existingLabel.Foreground = Brushes.Red;  // Vaihtaa tekstin värin punaiseksi
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public void Piece_Click(object sender, MouseButtonEventArgs e)
         {
             Label clickedPiece = sender as Label;
-            string name = $"{((Label)sender).Name}_false";
+            string name = $"{((Label)sender).Name}_true";
 
-            ChessViewModel chessViewModel = new ChessViewModel(_chessBoard, blackPiecesInfo, whitePiecesInfo, clickedPiece);
+            ChessViewModel chessViewModel = new ChessViewModel(blackPiecesInfo, whitePiecesInfo, clickedPiece);
 
-            Point pos = e.GetPosition(_chessBoard);
-            /*logic.clickedPosition = pos; siirrettävä */
+            position = e.GetPosition(_chessBoard);
+            SetDraggedPiecePosition();
 
             chessViewModel.OnPiecePressed(clickedPiece, name);
+            PieceHandling(clickedPiece, name);
         }
 
         public void Piece_UnClick(object sender, MouseButtonEventArgs e)
@@ -228,12 +333,42 @@ namespace Chess.View
             Label clickedPiece = sender as Label;
             string name = $"{((Label)sender).Name}_false";
 
-            ChessViewModel chessViewModel = new ChessViewModel(_chessBoard, blackPiecesInfo, whitePiecesInfo, clickedPiece);
 
-            Point pos = e.GetPosition(_chessBoard);
-            /*logic.clickedPosition = pos; siirrettävä */
+            position = e.GetPosition(_chessBoard);
 
-            chessViewModel.OnPieceReleased(clickedPiece, name);
+            _chessViewModel.OnPieceReleased(clickedPiece, name);
+            PieceHandling(clickedPiece, name);
         }
+
+        /* public void IfCursorOnLabel()
+        {
+            if (mouseButtonDown)
+            {
+                foreach (var move in ableToMoves)
+                {
+                    // katsoo ruudun paikan johon laitetaan label
+                    Border border = chessBoard.FindName(move) as Border;
+
+                    Point pos = border.TransformToAncestor(chessBoard).Transform(new Point(0, 0));
+
+                    // katsoo onko ruudun paikalla valmiiksi jo joku nappula
+                    bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
+                    bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
+
+                    if (position.X == pos.X)
+                    {
+                        Label label = new Label();
+
+                        label.FontSize = draggedLabel.FontSize;
+                        label.Content = draggedLabel.Content;
+                        label.Foreground = draggedLabel.Foreground;
+                        label.HorizontalAlignment = HorizontalAlignment.Center;
+                        label.VerticalAlignment = VerticalAlignment.Center;
+
+                        border.Child = label;
+                    }
+                }
+            }
+        }*/
     }
 }

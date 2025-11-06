@@ -13,13 +13,10 @@ using System.Windows.Media;
 
 namespace Chess.View
 {
-    internal class Logic
+    public class Logic
     {
-        private Grid chessBoard;
-        private Label draggedLabel; // nappula joka liikkuu hiiren mukana
-        Label pressedPiece; // nappula jota painettiin
+        private Label draggedLabel; 
 
-        Point clickedPosition { get; set; }
         Point position = new Point();
 
         List<Piece> blackPiecesInfo = new();
@@ -27,56 +24,19 @@ namespace Chess.View
 
         List<string> ableToMoves;
         List<string> ableToMove;
-        List<string> ableToEat;
+
+        public List<string> ableToEat {  get; set; }
 
         string[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H" };
 
-        bool followMouse = false;
         bool mouseButtonDown = false;
 
-        public Logic(Grid grid, List<Piece> blackPieces, List<Piece> whitePieces, Label pressedpiece)
+        public Logic(List<Piece> blackPieces, List<Piece> whitePieces, Label pressedpiece)
         {
-            chessBoard = grid;
             blackPiecesInfo = blackPieces;
             whitePiecesInfo = whitePieces;
             draggedLabel = pressedpiece;
         }
-
-       /* public void Piece_Clicked(Label clickedLabel, string clickedPiece)
-        {
-            pressedPiece = clickedLabel;
-            string color = clickedPiece.Split('_')[0];
-            string piece = clickedPiece.Split('_')[1];
-            string pieceLocation = clickedPiece.Split('_')[2];
-            string unClickCheck = "";
-            ableToMoves = new List<string>();
-            ableToEat = new List<string>();
-
-            unClickCheck = clickedPiece.Split('_')[3];
-
-            if (unClickCheck == "true")
-            {
-                mouseButtonDown = true;
-            }
-            else
-            {
-                mouseButtonDown = false;
-            }
-
-            chessBoard.MouseMove += ChessBoard_MouseMove;
-
-            // Vaihtaa nappulan läpinäkyvyyttä kun sitä painetaan
-            ChangePieceOpacity(); 
-
-            // Asetetaan hiiren mukana liikkuvan nappulan näkö samaksi kuin painettu
-            SetDraggedPieceVisual(clickedLabel);
-
-            // Jotain
-            PressedPiece(color, pieceLocation, piece);
-
-            // Jotain
-            MoveChangeVisualCreate(color);
-        }*/
 
         public List<string> Pawn_Movement(string color, string pieceLocation)
         {
@@ -92,8 +52,6 @@ namespace Chess.View
             ableToMove = new List<string>();
             ableToEat = new List<string>();
 
-            chessBoard.MouseMove += ChessBoard_MouseMove;
-
             if (color == "Black")
             {
                 if (num == 7)
@@ -103,7 +61,7 @@ namespace Chess.View
                     {
                         string move = $"{alphabet[alphabetNum]}{num - i}";
 
-                        con = MoveChangeListAdding(move, color, con);
+                        con = GetPossibleEatingPiece(move, color, con);
                     }
                 }
                 else if (num == 1)
@@ -117,7 +75,7 @@ namespace Chess.View
                     {
                         string move = $"{alphabet[alphabetNum]}{num - i}";
 
-                        con = MoveChangeListAdding(move, color, con);
+                        con = GetPossibleEatingPiece(move, color, con);
                     }
 
                 }
@@ -131,7 +89,7 @@ namespace Chess.View
                     {
                         string move = $"{alphabet[alphabetNum]}{num + i}";
 
-                        con = MoveChangeListAdding(move, color, con);
+                        con = GetPossibleEatingPiece(move, color, con);
                     }
                 }
                 else if (num == 8)
@@ -145,7 +103,7 @@ namespace Chess.View
                     {
                         string move = $"{alphabet[alphabetNum]}{num + i}";
 
-                        con = MoveChangeListAdding(move, color, con);
+                        con = GetPossibleEatingPiece(move, color, con);
                     }
                 }
             }
@@ -175,7 +133,7 @@ namespace Chess.View
                 {
                     string move = $"{alphabet[alphabetNum - i]}{num - i}";
 
-                    con = MoveChangeListAdding(move, color, con);
+                    con = GetPossibleEatingPiece(move, color, con);
                 }
             }
             con = true;
@@ -185,7 +143,7 @@ namespace Chess.View
                 {
                     string move = $"{alphabet[alphabetNum + i]}{num - i}";
 
-                    con = MoveChangeListAdding(move, color, con);
+                    con = GetPossibleEatingPiece(move, color, con);
                 }
             }
             con = true;
@@ -195,7 +153,7 @@ namespace Chess.View
                 {
                     string move = $"{alphabet[alphabetNum - i]}{num + i}";
 
-                    con = MoveChangeListAdding(move, color, con);
+                    con = GetPossibleEatingPiece(move, color, con);
                 }
             }
             con = true;
@@ -205,7 +163,7 @@ namespace Chess.View
                 {
                     string move = $"{alphabet[alphabetNum + i]}{num + i}";
 
-                    con = MoveChangeListAdding(move, color, con);
+                    con = GetPossibleEatingPiece(move, color, con);
                 }
             }
 
@@ -232,7 +190,7 @@ namespace Chess.View
                 {
                     string move = $"{alphabet[alphabetNum]}{num - i}";
 
-                    con = MoveChangeListAdding(move, color, con);
+                    con = GetPossibleEatingPiece(move, color, con);
                 }
             }
             con = true;
@@ -242,7 +200,7 @@ namespace Chess.View
                 {
                     string move = $"{alphabet[alphabetNum]}{num + i}";
 
-                    con = MoveChangeListAdding(move, color, con);
+                    con = GetPossibleEatingPiece(move, color, con);
                 }
             }
             con = true;
@@ -252,7 +210,7 @@ namespace Chess.View
                 {
                     string move = $"{alphabet[alphabetNum - i]}{num}";
 
-                    con = MoveChangeListAdding(move, color, con);
+                    con = GetPossibleEatingPiece(move, color, con);
                 }
             }
             con = true;
@@ -262,7 +220,7 @@ namespace Chess.View
                 {
                     string move = $"{alphabet[alphabetNum + i]}{num}";
 
-                    con = MoveChangeListAdding(move, color, con);
+                    con = GetPossibleEatingPiece(move, color, con);
                 }
             }
 
@@ -288,28 +246,28 @@ namespace Chess.View
             {
                 string move = $"{alphabet[alphabetNum - 1]}{num - 2}";
 
-                con = MoveChangeListAdding(move, color, con);
+                con = GetPossibleEatingPiece(move, color, con);
             }
             con = true;
             if (num - 2 <= 8 && num - 2 >= 1 && alphabetNum + 1 >= 0 && alphabetNum + 1 <= 7)
             {
                 string move = $"{alphabet[alphabetNum + 1]}{num - 2}";
 
-                con = MoveChangeListAdding(move, color, con);
+                con = GetPossibleEatingPiece(move, color, con);
             }
             con = true;
             if (num + 2 <= 8 && num + 2 >= 1 && alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
             {
                 string move = $"{alphabet[alphabetNum - 1]}{num + 2}";
 
-                con = MoveChangeListAdding(move, color, con);
+                con = GetPossibleEatingPiece(move, color, con);
             }
             con = true;
             if (num + 2 <= 8 && num + 2 >= 1 && alphabetNum + 1 >= 0 && alphabetNum + 1 <= 7)
             {
                 string move = $"{alphabet[alphabetNum + 1]}{num + 2}";
 
-                con = MoveChangeListAdding(move, color, con);
+                con = GetPossibleEatingPiece(move, color, con);
             }
             //sivuille
             con = true;
@@ -317,28 +275,28 @@ namespace Chess.View
             {
                 string move = $"{alphabet[alphabetNum - 2]}{num - 1}";
 
-                con = MoveChangeListAdding(move, color, con);
+                con = GetPossibleEatingPiece(move, color, con);
             }
             con = true;
             if (num + 1 <= 8 && num + 1 >= 1 && alphabetNum - 2 >= 0 && alphabetNum - 2 <= 7)
             {
                 string move = $"{alphabet[alphabetNum - 2]}{num + 1}";
 
-                con = MoveChangeListAdding(move, color, con);
+                con = GetPossibleEatingPiece(move, color, con);
             }
             con = true;
             if (num - 1 <= 8 && num - 1 >= 1 && alphabetNum + 2 >= 0 && alphabetNum + 2 <= 7)
             {
                 string move = $"{alphabet[alphabetNum + 2]}{num - 1}";
 
-                con = MoveChangeListAdding(move, color, con);
+                con = GetPossibleEatingPiece(move, color, con);
             }
             con = true;
             if (num + 1 <= 8 && num + 1 >= 1 && alphabetNum + 2 >= 0 && alphabetNum + 2 <= 7)
             {
                 string move = $"{alphabet[alphabetNum + 2]}{num + 1}";
 
-                con = MoveChangeListAdding(move, color, con);
+                con = GetPossibleEatingPiece(move, color, con);
             }
 
             return ableToMove;
@@ -363,56 +321,56 @@ namespace Chess.View
             {
                 string move = $"{alphabet[alphabetNum + 1]}{num + 1}";
 
-                con = MoveChangeListAdding(move, color, con);
+                con = GetPossibleEatingPiece(move, color, con);
             }
             con = true;
             if (num - 1 <= 8 && num - 1 >= 1 && alphabetNum + 1 >= 0 && alphabetNum + 1 <= 7)
             {
                 string move = $"{alphabet[alphabetNum + 1]}{num - 1}";
 
-                con = MoveChangeListAdding(move, color, con);
+                con = GetPossibleEatingPiece(move, color, con);
             }
             con = true;
             if (num + 1 <= 8 && num + 1 >= 1 && alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
             {
                 string move = $"{alphabet[alphabetNum - 1]}{num + 1}";
 
-                con = MoveChangeListAdding(move, color, con);
+                con = GetPossibleEatingPiece(move, color, con);
             }
             con = true;
             if (num - 1 <= 8 && num - 1 >= 1 && alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
             {
                 string move = $"{alphabet[alphabetNum - 1]}{num - 1}";
 
-                con = MoveChangeListAdding(move, color, con);
+                con = GetPossibleEatingPiece(move, color, con);
             }
             con = true;
             if (num + 1 <= 8 && num + 1 >= 1)
             {
                 string move = $"{alphabet[alphabetNum]}{num + 1}";
 
-                con = MoveChangeListAdding(move, color, con);
+                con = GetPossibleEatingPiece(move, color, con);
             }
             con = true;
             if (num - 1 <= 8 && num - 1 >= 1)
             {
                 string move = $"{alphabet[alphabetNum]}{num - 1}";
 
-                con = MoveChangeListAdding(move, color, con);
+                con = GetPossibleEatingPiece(move, color, con);
             }
             con = true;
             if (alphabetNum + 1 >= 0 && alphabetNum + 1 <= 7)
             {
                 string move = $"{alphabet[alphabetNum + 1]}{num}";
 
-                con = MoveChangeListAdding(move, color, con);
+                con = GetPossibleEatingPiece(move, color, con);
             }
             con = true;
             if (alphabetNum - 1 >= 0 && alphabetNum - 1 <= 7)
             {
                 string move = $"{alphabet[alphabetNum - 1]}{num}";
 
-                con = MoveChangeListAdding(move, color, con);
+                con = GetPossibleEatingPiece(move, color, con);
             }
 
             return ableToMove;
@@ -438,7 +396,7 @@ namespace Chess.View
                 {
                     string move = $"{alphabet[alphabetNum - i]}{num - i}";
 
-                    con = MoveChangeListAdding(move, color, con);
+                    con = GetPossibleEatingPiece(move, color, con);
                 }
             }
             con = true;
@@ -448,7 +406,7 @@ namespace Chess.View
                 {
                     string move = $"{alphabet[alphabetNum + i]}{num - i}";
 
-                    con = MoveChangeListAdding(move, color, con);
+                    con = GetPossibleEatingPiece(move, color, con);
                 }
             }
             con = true;
@@ -458,7 +416,7 @@ namespace Chess.View
                 {
                     string move = $"{alphabet[alphabetNum - i]}{num + i}";
 
-                    con = MoveChangeListAdding(move, color, con);
+                    con = GetPossibleEatingPiece(move, color, con);
                 }
             }
             con = true;
@@ -468,7 +426,7 @@ namespace Chess.View
                 {
                     string move = $"{alphabet[alphabetNum + i]}{num + i}";
 
-                    con = MoveChangeListAdding(move, color, con);
+                    con = GetPossibleEatingPiece(move, color, con);
                 }
             }
             con = true;
@@ -478,7 +436,7 @@ namespace Chess.View
                 {
                     string move = $"{alphabet[alphabetNum]}{num - i}";
 
-                    con = MoveChangeListAdding(move, color, con);
+                    con = GetPossibleEatingPiece(move, color, con);
                 }
             }
             con = true;
@@ -488,7 +446,7 @@ namespace Chess.View
                 {
                     string move = $"{alphabet[alphabetNum]}{num + i}";
 
-                    con = MoveChangeListAdding(move, color, con);
+                    con = GetPossibleEatingPiece(move, color, con);
                 }
             }
             con = true;
@@ -498,7 +456,7 @@ namespace Chess.View
                 {
                     string move = $"{alphabet[alphabetNum - i]}{num}";
 
-                    con = MoveChangeListAdding(move, color, con);
+                    con = GetPossibleEatingPiece(move, color, con);
                 }
             }
             con = true;
@@ -508,14 +466,14 @@ namespace Chess.View
                 {
                     string move = $"{alphabet[alphabetNum + i]}{num}";
 
-                    con = MoveChangeListAdding(move, color, con);
+                    con = GetPossibleEatingPiece(move, color, con);
                 }
             }
 
             return ableToMove;
         }
 
-        public List<string> GetPressedPieceMovement(string color, string pieceLocation, string piece)
+        public List<string> GetPossibleMovement(string color, string pieceLocation, string piece)
         {
             // Katsotaan mikä nappula oli painettu juuri olike se sotilas vai kuningas vai mikä
             if (piece == "Pawn")
@@ -545,74 +503,7 @@ namespace Chess.View
             return ableToMoves;
         }
 
-        public void MoveChangeVisualCreate(string color)
-        {
-            foreach (var move in ableToMoves)
-            {
-                // katsoo ruudun paikan johon laitetaan label
-                Border border = chessBoard.FindName(move) as Border;
-
-                // katsoo onko ruudun paikalla valmiiksi jo joku nappula
-                bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
-                bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
-
-                Label label = new Label();
-
-                if (mouseButtonDown) // poistetaan liikkumis mahdollisuus pallo
-                {
-                    label.Content = "";
-
-                    border.Child = label;
-                }
-                else // lisätään liikkumis mahdollisuus pallo
-                {
-                    label.FontSize = 30;
-                    label.Content = "●";
-                    label.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#7f7f7f");
-                    label.Opacity = 0.5;
-                    label.HorizontalAlignment = HorizontalAlignment.Center;
-                    label.VerticalAlignment = VerticalAlignment.Center;
-
-                    border.Child = label;
-                }
-            }
-
-            foreach (var piece in ableToEat)
-            {
-                Border border1 = chessBoard.FindName(piece) as Border;
-
-                if (color == "White")
-                {
-                    if (border1.Child is Label existingLabel)
-                    {
-                        if (mouseButtonDown) // poistetaan liikkumis mahdollisuus pallo
-                        {
-                            existingLabel.Foreground = Brushes.Black;  // Vaihtaa tekstin värin mustaksi
-                        }
-                        else // lisätään liikkumis mahdollisuus pallo
-                        {
-                            existingLabel.Foreground = Brushes.Red;  // Vaihtaa tekstin värin punaiseksi
-                        }
-                    }
-                }
-                else
-                {
-                    if (border1.Child is Label existingLabel)
-                    {
-                        if (mouseButtonDown) // poistetaan liikkumis mahdollisuus pallo
-                        {
-                            existingLabel.Foreground = Brushes.White;  // Vaihtaa tekstin värin mustaksi
-                        }
-                        else // lisätään liikkumis mahdollisuus pallo
-                        {
-                            existingLabel.Foreground = Brushes.Red;  // Vaihtaa tekstin värin punaiseksi
-                        }
-                    }
-                }
-            }
-        }
-
-        public bool MoveChangeListAdding(string move, string color, bool con)
+        public bool GetPossibleEatingPiece(string move, string color, bool con)
         {
             bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
             bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
@@ -632,93 +523,6 @@ namespace Chess.View
             }
 
             return con;
-        }
-
-        private void ChessBoard_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (pressedPiece != null && followMouse)
-            {
-                position = e.GetPosition(chessBoard);
-
-                Canvas.SetLeft(draggedLabel, position.X - 25);
-                Canvas.SetTop(draggedLabel, position.Y - 30);
-            }
-        }
-
-        /*private void ChangePieceOpacity()
-        {
-
-            if (mouseButtonDown)
-            {
-                pressedPiece.Opacity = 1;
-                followMouse = false;
-            }
-            else
-            {
-                pressedPiece.Opacity = 0.3;
-                followMouse = true;
-            }
-        }*/
-
-        /*private void SetDraggedPieceVisual(Label clickedLabel)
-        {
-            clickedLabel.MouseLeftButtonUp += Piece_UnClick;
-            if (mouseButtonDown)
-            {
-                draggedLabel.Foreground = clickedLabel.Foreground;
-                draggedLabel.Effect = clickedLabel.Effect;
-                draggedLabel.Content = clickedLabel.Content;
-            }
-            else
-            {
-                draggedLabel.Content = "";
-            }
-        }*/
-
-        public void IfCursorOnLabel()
-        {
-            if (mouseButtonDown)
-            {
-                foreach (var move in ableToMoves)
-                {
-                    // katsoo ruudun paikan johon laitetaan label
-                    Border border = chessBoard.FindName(move) as Border;
-
-                    Point pos = border.TransformToAncestor(chessBoard).Transform(new Point(0, 0));
-
-                    // katsoo onko ruudun paikalla valmiiksi jo joku nappula
-                    bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
-                    bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
-
-                    if (position.X == pos.X)
-                    {
-                        Label label = new Label();
-
-                        label.FontSize = draggedLabel.FontSize;
-                        label.Content = draggedLabel.Content;
-                        label.Foreground = draggedLabel.Foreground;
-                        label.HorizontalAlignment = HorizontalAlignment.Center;
-                        label.VerticalAlignment = VerticalAlignment.Center;
-
-                        border.Child = label;
-                    }
-                }
-            }
-        }
-
-        private void CursorChange(string cursorType)
-        {
-            if (cursorType == "Hand")
-            {
-
-            }
-        }
-
-        public void Piece_UnClick(object sender, MouseButtonEventArgs e)
-        {
-            string name = ((Label)sender).Name;
-            Label clickedLabel = sender as Label;
-            IfCursorOnLabel();
         }
     }
 }

@@ -31,7 +31,6 @@ namespace Chess
             int fontSize = boardSize / 10;
 
             // Luo lauta ja nappulat
-            Board board = new Board(ChessBoard, pressedPiece);
             Pieces pieces = new Pieces();
             UIBuilder uIBuilder = new UIBuilder(ChessBoard, pressedPiece);
 
