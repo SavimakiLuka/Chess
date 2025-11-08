@@ -17,7 +17,7 @@ namespace Chess.ViewModel
 
         internal ChessViewModel(List<Piece> blackPieces, List<Piece> whitePieces, Label clickedPiece)
         {
-            _logic = new Logic(blackPieces, whitePieces, clickedPiece);
+            _logic = new Logic(clickedPiece);
         }
 
         public void OnPieceReleased(Label clickedPiece, string pieceName)
@@ -30,21 +30,29 @@ namespace Chess.ViewModel
             
         }
 
-        public List<String> ReturnPossibleMovement(string color, string pieceLocation, string piece)
+        public List<String> ReturnPossibleMovement(string color, string pieceLocation, string piece, List<Piece> whitePieces, List<Piece> blackPieces)
         {
             List<String> result = new List<String>();
-            result = _logic.GetPossibleMovement(color, pieceLocation, piece);
+            result = _logic.GetPossibleMovement(color, pieceLocation, piece, whitePieces, blackPieces);
 
             return result;
         }
 
-/*        public List<String> ReturnPossibleEatingPieces(string color, string pieceLocation, string piece)
+        public List<String> ReturnPossibleEatingPieces()
         {
             List<String> result = new List<String>();
-            result = _logic.GetPossibleEatingPiece(pieceLocation, color, piece);
+            result = _logic.GetPossibleEatingPiece();
 
             return result;
-        }*/
+        }
+
+        public List<String> ReturnPossibleSwitchingKing()
+        {
+            List<String> result = new List<String>();
+            result = _logic.GetPossibleSwitchingKing();
+
+            return result;
+        }
 
     }
 }

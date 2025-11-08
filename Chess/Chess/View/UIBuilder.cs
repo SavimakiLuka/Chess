@@ -166,6 +166,8 @@ namespace Chess.View
             mouseButtonDown = false;
             var ableToMoves = new List<string>();
             var ableToEat = new List<string>();
+            var ableToSwitch = new List<string>();
+            bool pawnAtFinish = false;
 
             unClickCheck = clickedPiece.Split('_')[3];
 
@@ -179,7 +181,7 @@ namespace Chess.View
             }
 
             _chessViewModel = new(blackPiecesInfo, whitePiecesInfo, pressedPiece);
-            _logic = new(blackPiecesInfo, whitePiecesInfo, pressedPiece);
+            _logic = new(pressedPiece);
 
             _chessBoard.MouseMove += ChessBoard_MouseMove;
 
@@ -190,19 +192,56 @@ namespace Chess.View
             SetDraggedPieceVisual(pressedPiece, draggedPiece, mouseButtonDown);
 
             // Katsoo mitä nappulaa painettiin ja palauttaa listan mahdollisista liikkumis paikoista
-            ableToMoves = _chessViewModel.ReturnPossibleMovement(color, pieceLocation, piece);
+            ableToMoves = _chessViewModel.ReturnPossibleMovement(color, pieceLocation, piece, whitePiecesInfo, blackPiecesInfo);
+            ableToEat = _chessViewModel.ReturnPossibleEatingPieces();
+            ableToSwitch = _chessViewModel.ReturnPossibleSwitchingKing();
 
-            // Katsoo mitä nappulaa painettiin ja palauttaa listan mahdollisista syömis paikoista
-            /*ableToEat = _chessViewModel.ReturnPossibleEatingPieces(color, pieceLocation, piece);*/
-            ableToEat = _logic.ableToEat;
+            // Katsoo jos pawn on laudan päädyssä ja voi muuttua
+            GetPawnChange(ableToMoves, pawnAtFinish);
+            
+            if (!pawnAtFinish)
+            {
+                // Luo lableit jotka näyttävät mihin nappula voi liikkua
+                CreateMovementPatterns(color, ableToMoves, ableToEat, mouseButtonDown, ableToSwitch);
 
-            // Luo lableit jotka näyttävät mihin nappula voi liikkua
-            CreateMovementPatterns(color, ableToMoves, ableToEat, mouseButtonDown);
+                // Asetetaan Nappula siirretylle paikalle
+                IfCursorOnPossibleMove(ableToMoves, ableToEat, pieceLocation, ableToSwitch);
+            }
+            else
+            {
+                SetPawnChange();
+            }
+        }
+
+        private bool GetPawnChange(List<string> ableToMoves, bool pawnAtFinish)
+        {
+            if (ableToMoves.Count == 1)
+            {
+                foreach (var item in ableToMoves)
+                {
+                    if (item == "pawnChange")
+                    {
+                        pawnAtFinish = true;
+                        return pawnAtFinish;
+                    }
+                }
+            }
+
+            return pawnAtFinish;
+        }
+
+        private void SetPawnChange(/*string fromLocation*/)
+        {
+            /*Border oldBorder = _chessBoard.FindName(fromLocation) as Border;
+
+            if (oldBorder?.Child is Label pieceLabel)
+            {
+                pieceLabel
+            }*/
         }
 
         private void SetDraggedPieceVisual(Label pressedPiece, Label draggedLabel, bool mouseButtonDown)
         {
-            pressedPiece.MouseLeftButtonUp += Piece_UnClick;
             if (mouseButtonDown)
             {
                 draggedLabel.Foreground = pressedPiece.Foreground;
@@ -211,7 +250,7 @@ namespace Chess.View
             }
             else
             {
-                draggedLabel.Content = "";
+                draggedPiece.Content = null;
             }
         }
 
@@ -244,16 +283,12 @@ namespace Chess.View
             Canvas.SetTop(draggedPiece, position.Y - 30);
         }
 
-        public void CreateMovementPatterns(string color, List<string> ableToMoves, List<string> ableToEat, bool mouseButtonDown)
+        public void CreateMovementPatterns(string color, List<string> ableToMoves, List<string> ableToEat, bool mouseButtonDown, List<string> ableToSwitch)
         {
             foreach (var move in ableToMoves)
             {
                 // katsoo ruudun paikan johon laitetaan label
                 Border border = _chessBoard.FindName(move) as Border;
-
-                // katsoo onko ruudun paikalla valmiiksi jo joku nappula
-                bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
-                bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
 
                 Label label = new Label();
 
@@ -286,7 +321,7 @@ namespace Chess.View
                     {
                         if (border1.Child is Label existingLabel)
                         {
-                            if (mouseButtonDown) // poistetaan liikkumis mahdollisuus pallo
+                            if (!mouseButtonDown) // poistetaan liikkumis mahdollisuus pallo
                             {
                                 existingLabel.Foreground = Brushes.Black;  // Vaihtaa tekstin värin mustaksi
                             }
@@ -300,13 +335,49 @@ namespace Chess.View
                     {
                         if (border1.Child is Label existingLabel)
                         {
-                            if (mouseButtonDown) // poistetaan liikkumis mahdollisuus pallo
+                            if (!mouseButtonDown) // poistetaan liikkumis mahdollisuus pallo
                             {
                                 existingLabel.Foreground = Brushes.White;  // Vaihtaa tekstin värin mustaksi
                             }
                             else // lisätään liikkumis mahdollisuus pallo
                             {
                                 existingLabel.Foreground = Brushes.Red;  // Vaihtaa tekstin värin punaiseksi
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (ableToSwitch != null)
+            {
+                foreach (var piece in ableToSwitch)
+                {
+                    Border border1 = _chessBoard.FindName(piece) as Border;
+                    if (color == "Black")
+                    {
+                        if (border1.Child is Label existingLabel)
+                        {
+                            if (!mouseButtonDown) // poistetaan liikkumis mahdollisuus pallo
+                            {
+                                existingLabel.Foreground = Brushes.Black;  // Vaihtaa tekstin värin mustaksi
+                            }
+                            else // lisätään liikkumis mahdollisuus pallo
+                            {
+                                existingLabel.Foreground = Brushes.Blue;  // Vaihtaa tekstin värin Siniseksi
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (border1.Child is Label existingLabel)
+                        {
+                            if (!mouseButtonDown) // poistetaan liikkumis mahdollisuus pallo
+                            {
+                                existingLabel.Foreground = Brushes.White;  // Vaihtaa tekstin värin mustaksi
+                            }
+                            else // lisätään liikkumis mahdollisuus pallo
+                            {
+                                existingLabel.Foreground = Brushes.Blue;  // Vaihtaa tekstin värin Siniseksi
                             }
                         }
                     }
@@ -324,6 +395,9 @@ namespace Chess.View
             position = e.GetPosition(_chessBoard);
             SetDraggedPiecePosition();
 
+            // mahdollistaa nappulan päästämisen ruudun ulkopuolella
+            clickedPiece.CaptureMouse();
+
             chessViewModel.OnPiecePressed(clickedPiece, name);
             PieceHandling(clickedPiece, name);
         }
@@ -336,39 +410,183 @@ namespace Chess.View
 
             position = e.GetPosition(_chessBoard);
 
+            // mahdollistaa nappulan päästämisen ruudun ulkopuolella
+            clickedPiece.ReleaseMouseCapture();
+
             _chessViewModel.OnPieceReleased(clickedPiece, name);
             PieceHandling(clickedPiece, name);
         }
 
-        /* public void IfCursorOnLabel()
+        public void IfCursorOnPossibleMove(List<string> ableToMoves, List<string> ableToEat, string pieceLocation, List<string> ableToSwitch)
         {
-            if (mouseButtonDown)
+            if (!mouseButtonDown)
             {
                 foreach (var move in ableToMoves)
                 {
                     // katsoo ruudun paikan johon laitetaan label
-                    Border border = chessBoard.FindName(move) as Border;
+                    Border border = _chessBoard.FindName(move) as Border;
 
-                    Point pos = border.TransformToAncestor(chessBoard).Transform(new Point(0, 0));
+                    Point pos = border.TransformToAncestor(_chessBoard).Transform(new Point(0, 0));
 
-                    // katsoo onko ruudun paikalla valmiiksi jo joku nappula
-                    bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
-                    bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
-
-                    if (position.X == pos.X)
+                    if (position.X >= pos.X && position.X < pos.X + 50 && position.Y >= pos.Y && position.Y < pos.Y + 50)
                     {
-                        Label label = new Label();
+                        MovePiece(pieceLocation, move);
+                    }
+                }
 
-                        label.FontSize = draggedLabel.FontSize;
-                        label.Content = draggedLabel.Content;
-                        label.Foreground = draggedLabel.Foreground;
-                        label.HorizontalAlignment = HorizontalAlignment.Center;
-                        label.VerticalAlignment = VerticalAlignment.Center;
+                foreach (var move in ableToEat)
+                {
+                    // katsoo ruudun paikan johon laitetaan label
+                    Border border = _chessBoard.FindName(move) as Border;
 
-                        border.Child = label;
+                    Point pos = border.TransformToAncestor(_chessBoard).Transform(new Point(0, 0));
+
+                    if (position.X >= pos.X && position.X < pos.X + 40 && position.Y >= pos.Y && position.Y < pos.Y + 40)
+                    {
+                        MovePiece(pieceLocation, move);
+                    }
+                }
+
+                if (ableToSwitch != null)
+                {
+                    foreach (var move in ableToSwitch)
+                    {
+                        // katsoo ruudun paikan johon laitetaan label
+                        Border border = _chessBoard.FindName(move) as Border;
+
+                        Point pos = border.TransformToAncestor(_chessBoard).Transform(new Point(0, 0));
+
+                        if (position.X >= pos.X && position.X < pos.X + 40 && position.Y >= pos.Y && position.Y < pos.Y + 40)
+                        {
+                            SwitchPlaces(pieceLocation, move);
+                        }
                     }
                 }
             }
-        }*/
+        }
+
+        public void SwitchPlaces(string fromLocation, string toLocation)
+        {
+            // valkoisen kuninkaan lyhyt tornitus 
+            if (toLocation == "H1")
+            {
+                MovePieceOnBoard(fromLocation, "G1"); // kuningas
+                MovePieceOnBoard("H1", "F1");         // torni
+            }
+            // valkoisen kuninkaan pitkä tornitus 
+            else if (toLocation == "A1")
+            {
+                MovePieceOnBoard(fromLocation, "C1"); // kuningas
+                MovePieceOnBoard("A1", "D1");         // torni
+            }
+            // mustan kuninkaan lyhyt tornitus 
+            else if (toLocation == "H8")
+            {
+                MovePieceOnBoard(fromLocation, "G8"); // kuningas
+                MovePieceOnBoard("H8", "F8");         // torni
+            }
+            // mustan kuninkaan pitkä tornitus 
+            else if (toLocation == "A8")
+            {
+                MovePieceOnBoard(fromLocation, "C8"); // kuningas
+                MovePieceOnBoard("A8", "D8");         // torni
+            }
+        }
+
+        private void MovePieceOnBoard(string fromLocation, string toLocation)
+        {
+            Border oldBorder = _chessBoard.FindName(fromLocation) as Border;
+            Border newBorder = _chessBoard.FindName(toLocation) as Border;
+
+            if (oldBorder?.Child is not Label pieceLabel || newBorder == null)
+                return;
+
+            // Poistetaan vanhasta ruudusta
+            oldBorder.Child = null;
+
+            // Yritetään poistaa nimi rekisteristä jos se on olemassa
+            try { _chessBoard.UnregisterName(pieceLabel.Name); } catch { }
+
+            // Päivitetään nimi ja sijainti
+            string[] parts = pieceLabel.Name.Split('_');
+            pieceLabel.Name = $"{parts[0]}_{parts[1]}_{toLocation}";
+
+            try { _chessBoard.RegisterName(pieceLabel.Name, pieceLabel); } catch { }
+
+            // Asetetaan uusi ruutu
+            newBorder.Child = pieceLabel;
+
+            // Päivitetään nappulan sijainti listassa
+            UpdatePieceLocation(fromLocation, toLocation);
+        }
+
+        private void UpdatePieceLocation(string fromLocation, string toLocation)
+        {
+            foreach (var item in whitePiecesInfo)
+            {
+                if (item.Location == fromLocation)
+                {
+                    item.Location = toLocation;
+                }
+            }
+
+            foreach (var item in blackPiecesInfo)
+            {
+                if (item.Location == fromLocation)
+                {
+                    item.Location = toLocation;
+                }
+            }
+        }
+
+        public void MovePiece(string fromLocation, string toLocation)
+        {
+            Border oldBorder = _chessBoard.FindName(fromLocation) as Border;
+            Border newBorder = _chessBoard.FindName(toLocation) as Border;
+
+
+            if (oldBorder?.Child is Label pieceLabel)
+            {
+                // Poista vanhasta ruudusta
+                oldBorder.Child = null;
+
+                try
+                {
+                    // poistetaan vanha nimi rekisteristä
+                    _chessBoard.UnregisterName(pieceLabel.Name);
+                }
+                catch { /* nimi ei ehkä ollut rekisteröity */ }
+
+                // Päivitä nimi ja sijainti
+                string[] parts = pieceLabel.Name.Split('_');
+                pieceLabel.Name = $"{parts[0]}_{parts[1]}_{toLocation}";
+
+                try
+                {
+                    // lisätään nimi rekisteriin
+                    _chessBoard.RegisterName(pieceLabel.Name, pieceLabel);
+                }
+                catch { /* nimi oli ehkä rekisteröity jo */ }
+
+                // Laita uuteen ruutuun
+                newBorder.Child = pieceLabel;
+
+                foreach (var item in whitePiecesInfo)
+                {
+                    if (item.Location == fromLocation)
+                    {
+                        item.Location = toLocation;
+                    }
+                }
+
+                foreach (var item in blackPiecesInfo)
+                {
+                    if (item.Location == fromLocation)
+                    {
+                        item.Location = toLocation;
+                    }
+                }
+            }
+        }
     }
 }

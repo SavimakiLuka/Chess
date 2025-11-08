@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace Chess.View
 
         List<string> ableToMoves;
         List<string> ableToMove;
+        List<string> ableToSwitch;
 
         public List<string> ableToEat {  get; set; }
 
@@ -31,18 +33,123 @@ namespace Chess.View
 
         bool mouseButtonDown = false;
 
-        public Logic(List<Piece> blackPieces, List<Piece> whitePieces, Label pressedpiece)
+        public Logic(Label pressedpiece)
         {
-            blackPiecesInfo = blackPieces;
-            whitePiecesInfo = whitePieces;
-            draggedLabel = pressedpiece;
+        }
+
+        public List<string> KingRook_Movementint(int alphabetNum, int num, string color)
+        {
+            ableToSwitch = new List<string>();
+            List<string> moves = new List<string>();
+
+            if (color == "Black")
+            {
+                moves.Add($"{alphabet[alphabetNum + 3]}{num}");
+                moves.Add($"{alphabet[alphabetNum - 4]}{num}");
+
+                foreach (string move in moves)
+                {
+                    var blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move && l.name == "Rook");
+
+                    if (blackMoveChanceHit)
+                    {
+                        ableToSwitch.Add(move);
+                    }
+                }
+            }
+            else
+            {
+                moves.Add($"{alphabet[alphabetNum + 3]}{num}");
+                moves.Add($"{alphabet[alphabetNum - 4]}{num}");
+
+                foreach (string move in moves)
+                {
+                    var whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move && l.name == "Rook");
+
+                    if (whiteMoveChanceHit)
+                    {
+                        ableToSwitch.Add(move);
+                    }
+                }
+            }
+
+            return ableToSwitch;
+        }
+
+        public void Pawn_Eating(int alphabetNum, int num, string color)
+        {
+            if (color == "Black")
+            {
+                var con = true;
+                for (int i = 1; i < 2 && con; i++)
+                {
+                    if (num - i <= 8 && num - i >= 1 && alphabetNum - i >= 0 && alphabetNum - i <= 7)
+                    {
+                        string move = $"{alphabet[alphabetNum - 1]}{num - i}";
+
+                        bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
+
+                        if (whiteMoveChanceHit)
+                        {
+                            con = GetPossibleEatingPiece(move, color, con);
+                        }
+                    }
+                }
+
+                con = true;
+                for (int i = 1; i < 2 && con; i++)
+                {
+                    if (num - i <= 8 && num - i >= 1 && alphabetNum + i >= 0 && alphabetNum + i <= 7)
+                    {
+                        string move = $"{alphabet[alphabetNum + 1]}{num - i}";
+
+                        bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
+
+                        if (whiteMoveChanceHit)
+                        {
+                            con = GetPossibleEatingPiece(move, color, con);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                var con = true;
+                for (int i = 1; i < 2 && con; i++)
+                {
+                    if (num + i <= 8 && num + i >= 1 && alphabetNum - i >= 0 && alphabetNum - i <= 7)
+                    {
+                        string move = $"{alphabet[alphabetNum - 1]}{num + i}";
+
+                        bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
+
+                        if (blackMoveChanceHit)
+                        {
+                            con = GetPossibleEatingPiece(move, color, con);
+                        }
+                    }
+                }
+
+                con = true;
+                for (int i = 1; i < 2 && con; i++)
+                {
+                    if (num + i <= 8 && num + i >= 1 && alphabetNum + i >= 0 && alphabetNum + i <= 7)
+                    {
+                        string move = $"{alphabet[alphabetNum + 1]}{num + i}";
+
+                        bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
+
+                        if (blackMoveChanceHit)
+                        {
+                            con = GetPossibleEatingPiece(move, color, con);
+                        }
+                    }
+                }
+            }
         }
 
         public List<string> Pawn_Movement(string color, string pieceLocation)
         {
-            int possibleLocations = 0;
-
-
             int index = pieceLocation.IndexOfAny(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
             string chars = pieceLocation.Substring(0, index);
             int num = int.Parse(pieceLocation.Substring(index));
@@ -61,8 +168,15 @@ namespace Chess.View
                     {
                         string move = $"{alphabet[alphabetNum]}{num - i}";
 
-                        con = GetPossibleEatingPiece(move, color, con);
+                        bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
+
+                        if (!whiteMoveChanceHit)
+                        {
+                            con = GetPossibleEatingPiece(move, color, con);
+                        }
                     }
+
+                    Pawn_Eating(alphabetNum, num, color);
                 }
                 else if (num == 1)
                 {
@@ -75,10 +189,16 @@ namespace Chess.View
                     {
                         string move = $"{alphabet[alphabetNum]}{num - i}";
 
-                        con = GetPossibleEatingPiece(move, color, con);
+                        bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
+
+                        if (!whiteMoveChanceHit)
+                        {
+                            con = GetPossibleEatingPiece(move, color, con);
+                        }
                     }
 
-                }
+                    Pawn_Eating(alphabetNum, num, color);
+                    }
             }
             else
             {
@@ -89,12 +209,26 @@ namespace Chess.View
                     {
                         string move = $"{alphabet[alphabetNum]}{num + i}";
 
-                        con = GetPossibleEatingPiece(move, color, con);
+                        bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
+
+                        if (!blackMoveChanceHit)
+                        {
+                            con = GetPossibleEatingPiece(move, color, con);
+                        }
+                        else
+                        {
+                            con = false;
+                        }
                     }
+
+                    Pawn_Eating(alphabetNum, num, color);
                 }
                 else if (num == 8)
                 {
-                    MessageBox.Show("Pääsit päätyyn onneksi olkoon!");
+                    ableToMove.Clear();
+                    ableToMove.Add("PawnChange");
+
+                    return ableToMove;
                 }
                 else
                 {
@@ -103,8 +237,15 @@ namespace Chess.View
                     {
                         string move = $"{alphabet[alphabetNum]}{num + i}";
 
-                        con = GetPossibleEatingPiece(move, color, con);
+                        bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
+
+                        if (!blackMoveChanceHit)
+                        {
+                            con = GetPossibleEatingPiece(move, color, con);
+                        }
                     }
+
+                    Pawn_Eating(alphabetNum, num, color);
                 }
             }
 
@@ -113,9 +254,6 @@ namespace Chess.View
 
         public List<string> Bishop_Movement(string color, string pieceLocation)
         {
-            int possibleLocations = 0;
-
-
             int index = pieceLocation.IndexOfAny(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
             string chars = pieceLocation.Substring(0, index);
             int num = int.Parse(pieceLocation.Substring(index));
@@ -172,8 +310,6 @@ namespace Chess.View
 
         public List<string> Rook_Movement(string color, string pieceLocation)
         {
-            int possibleLocations = 0;
-
             int index = pieceLocation.IndexOfAny(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
             string chars = pieceLocation.Substring(0, index);
             int num = int.Parse(pieceLocation.Substring(index));
@@ -229,9 +365,6 @@ namespace Chess.View
 
         public List<string> Knight_Movement(string color, string pieceLocation)
         {
-            int possibleLocations = 0;
-
-
             int index = pieceLocation.IndexOfAny(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
             string chars = pieceLocation.Substring(0, index);
             int num = int.Parse(pieceLocation.Substring(index));
@@ -304,9 +437,6 @@ namespace Chess.View
 
         public List<string> King_Movement(string color, string pieceLocation)
         {
-            int possibleLocations = 0;
-
-
             int index = pieceLocation.IndexOfAny(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
             string chars = pieceLocation.Substring(0, index);
             int num = int.Parse(pieceLocation.Substring(index));
@@ -373,13 +503,13 @@ namespace Chess.View
                 con = GetPossibleEatingPiece(move, color, con);
             }
 
+            ableToSwitch = KingRook_Movementint(alphabetNum, num, color);
+
             return ableToMove;
         }
 
         public List<string> Queen_Movement(string color, string pieceLocation)
         {
-            int possibleLocations = 0;
-
             int index = pieceLocation.IndexOfAny(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
             string chars = pieceLocation.Substring(0, index);
             int num = int.Parse(pieceLocation.Substring(index));
@@ -473,8 +603,11 @@ namespace Chess.View
             return ableToMove;
         }
 
-        public List<string> GetPossibleMovement(string color, string pieceLocation, string piece)
+        public List<string> GetPossibleMovement(string color, string pieceLocation, string piece, List<Piece> whitePieces, List<Piece> blackPieces)
         {
+            blackPiecesInfo = blackPieces;
+            whitePiecesInfo = whitePieces;
+
             // Katsotaan mikä nappula oli painettu juuri olike se sotilas vai kuningas vai mikä
             if (piece == "Pawn")
             {
@@ -501,6 +634,16 @@ namespace Chess.View
                 ableToMoves = Queen_Movement(color, pieceLocation);
             }
             return ableToMoves;
+        }
+
+        public List<string> GetPossibleEatingPiece()
+        {
+            return ableToEat;
+        }
+
+        public List<string> GetPossibleSwitchingKing()
+        {
+            return ableToSwitch;
         }
 
         public bool GetPossibleEatingPiece(string move, string color, bool con)
