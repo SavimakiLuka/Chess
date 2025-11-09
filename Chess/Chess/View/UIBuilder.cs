@@ -317,32 +317,18 @@ namespace Chess.View
                 {
                     Border border1 = _chessBoard.FindName(piece) as Border;
 
-                    if (color == "White")
+                    if (border1.Child is Label existingLabel)
                     {
-                        if (border1.Child is Label existingLabel)
+                        if (!mouseButtonDown)
                         {
-                            if (!mouseButtonDown) // poistetaan liikkumis mahdollisuus pallo
-                            {
-                                existingLabel.Foreground = Brushes.Black;  // Vaihtaa tekstin värin mustaksi
-                            }
-                            else // lisätään liikkumis mahdollisuus pallo
-                            {
-                                existingLabel.Foreground = Brushes.Red;  // Vaihtaa tekstin värin punaiseksi
-                            }
+                            if (existingLabel.Name.StartsWith("White"))
+                                existingLabel.Foreground = Brushes.White;
+                            else
+                                existingLabel.Foreground = Brushes.Black;
                         }
-                    }
-                    else
-                    {
-                        if (border1.Child is Label existingLabel)
+                        else
                         {
-                            if (!mouseButtonDown) // poistetaan liikkumis mahdollisuus pallo
-                            {
-                                existingLabel.Foreground = Brushes.White;  // Vaihtaa tekstin värin mustaksi
-                            }
-                            else // lisätään liikkumis mahdollisuus pallo
-                            {
-                                existingLabel.Foreground = Brushes.Red;  // Vaihtaa tekstin värin punaiseksi
-                            }
+                            existingLabel.Foreground = Brushes.Red;
                         }
                     }
                 }

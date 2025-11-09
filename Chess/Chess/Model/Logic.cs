@@ -40,40 +40,110 @@ namespace Chess.View
         public List<string> KingRook_Movementint(int alphabetNum, int num, string color)
         {
             ableToSwitch = new List<string>();
-            List<string> moves = new List<string>();
 
-            if (color == "Black")
-            {
-                moves.Add($"{alphabet[alphabetNum + 3]}{num}");
-                moves.Add($"{alphabet[alphabetNum - 4]}{num}");
-
-                foreach (string move in moves)
-                {
-                    var blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move && l.name == "Rook");
-
-                    if (blackMoveChanceHit)
-                    {
-                        ableToSwitch.Add(move);
-                    }
-                }
-            }
-            else
-            {
-                moves.Add($"{alphabet[alphabetNum + 3]}{num}");
-                moves.Add($"{alphabet[alphabetNum - 4]}{num}");
-
-                foreach (string move in moves)
-                {
-                    var whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move && l.name == "Rook");
-
-                    if (whiteMoveChanceHit)
-                    {
-                        ableToSwitch.Add(move);
-                    }
-                }
-            }
+            // Kutsutaan molemmat suunnat
+            KingRook_Right(alphabetNum, num, color);
+            KingRook_Left(alphabetNum, num, color);
 
             return ableToSwitch;
+        }
+
+        private void KingRook_Right(int alphabetNum, int num, string color)
+        {
+            bool con = true;
+
+            // Käy läpi väli kuninkaan ja tornin välillä
+            for (int i = 1; i < 3 && con; i++)
+            {
+                if (alphabetNum - i <= 7 && alphabetNum - i >= 0)
+                {
+                    string move = $"{alphabet[alphabetNum + i]}{num}";
+
+                    bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
+                    bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
+
+                    if (!blackMoveChanceHit && !whiteMoveChanceHit)
+                    {
+                        ableToMove.Add(move);
+                    }
+                    else
+                    {
+                        if (color == "White" && blackMoveChanceHit || color == "Black" && whiteMoveChanceHit)
+                        {
+                            ableToEat.Add($"{move}");
+                        }
+
+                        con = false;
+                    }
+                }
+            }
+
+            // Jos reitti vapaa, etsitään torni
+            if (con)
+            {
+                string move = $"{alphabet[alphabetNum + 3]}{num}";
+                bool rookFound = false;
+
+                if (color == "White")
+                {
+                    rookFound = whitePiecesInfo.Any(l => l.Location == move && l.name == "Rook");
+                }
+                else
+                {
+                    rookFound = blackPiecesInfo.Any(l => l.Location == move && l.name == "Rook");
+                }
+
+                if (rookFound)
+                {
+                    ableToSwitch.Add(move);
+                }
+            }
+        }
+
+        private void KingRook_Left(int alphabetNum, int num, string color)
+        {
+            bool con = true;
+
+            // Käy läpi väli kuninkaan ja tornin välillä
+            for (int i = 1; i < 4 && con; i++)
+            {
+                if (alphabetNum - i <= 7 && alphabetNum - i >= 0)
+                {
+                    string move = $"{alphabet[alphabetNum - i]}{num}";
+
+                    bool blackMoveChanceHit = blackPiecesInfo.Any(l => l.Location == move);
+                    bool whiteMoveChanceHit = whitePiecesInfo.Any(l => l.Location == move);
+
+                    if (!blackMoveChanceHit && !whiteMoveChanceHit)
+                    {
+                        ableToMove.Add(move);
+                    }
+                    else
+                    {
+                        if (color == "White" && blackMoveChanceHit || color == "Black" && whiteMoveChanceHit)
+                        {
+                            ableToEat.Add($"{move}");
+                        }
+
+                        con = false;
+                    }
+                }
+            }
+
+            // Jos reitti vapaa, etsitään torni
+            if (con)
+            {
+                string move = $"{alphabet[alphabetNum - 4]}{num}";
+                bool rookFound = false;
+
+                if (color == "White")
+                    rookFound = whitePiecesInfo.Any(l => l.Location == move && l.name == "Rook");
+                else
+                    rookFound = blackPiecesInfo.Any(l => l.Location == move && l.name == "Rook");
+
+                if (rookFound)
+                    ableToSwitch.Add(move);
+            }
         }
 
         public void Pawn_Eating(int alphabetNum, int num, string color)
@@ -173,6 +243,10 @@ namespace Chess.View
                         if (!whiteMoveChanceHit)
                         {
                             con = GetPossibleEatingPiece(move, color, con);
+                        }
+                        else
+                        {
+                            con = false;
                         }
                     }
 
