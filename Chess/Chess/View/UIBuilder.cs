@@ -98,9 +98,18 @@ namespace Chess.View
                 if (squareBorder != null && squareBorder.Child == null)
                 {
                     Label label = new Label();
-                    label.Name = $"{piece.color}_{piece.name}_{piece.Location}";
+                    if (piece.name == "King")
+                    {
+                        label.Name = $"{piece.color}_{piece.name}_{piece.Location}_HasNotMoved";
 
-                    _chessBoard.RegisterName(label.Name, label);
+                        _chessBoard.RegisterName(label.Name, label);
+                    }
+                    else
+                    {
+                        label.Name = $"{piece.color}_{piece.name}_{piece.Location}";
+
+                        _chessBoard.RegisterName(label.Name, label);
+                    }
 
                     label.FontSize = fontSize;
                     label.Content = piece.Emoji;
@@ -131,9 +140,18 @@ namespace Chess.View
                 if (squareBorder != null && squareBorder.Child == null)
                 {
                     Label label = new Label();
-                    label.Name = $"{piece.color}_{piece.name}_{piece.Location}";
+                    if (piece.name == "King")
+                    {
+                        label.Name = $"{piece.color}_{piece.name}_{piece.Location}_HasNotMoved";
 
-                    _chessBoard.RegisterName(label.Name, label);
+                        _chessBoard.RegisterName(label.Name, label);
+                    }
+                    else
+                    {
+                        label.Name = $"{piece.color}_{piece.name}_{piece.Location}";
+
+                        _chessBoard.RegisterName(label.Name, label);
+                    }
 
                     label.FontSize = fontSize;
                     label.Content = piece.Emoji;
@@ -163,6 +181,7 @@ namespace Chess.View
             var piece = clickedPiece.Split('_')[1];
             var pieceLocation = clickedPiece.Split('_')[2];
             var unClickCheck = "";
+            var hasMoved = "";
             mouseButtonDown = false;
             var ableToMoves = new List<string>();
             var ableToEat = new List<string>();
@@ -170,6 +189,12 @@ namespace Chess.View
             bool pawnAtFinish = false;
 
             unClickCheck = clickedPiece.Split('_')[3];
+            
+            if (unClickCheck == "HasNotMoved")
+            {
+                hasMoved = clickedPiece.Split('_')[3];
+                unClickCheck = clickedPiece.Split('_')[4];
+            }
 
             if (unClickCheck == "true")
             {
@@ -192,7 +217,7 @@ namespace Chess.View
             SetDraggedPieceVisual(pressedPiece, draggedPiece, mouseButtonDown);
 
             // Katsoo mitä nappulaa painettiin ja palauttaa listan mahdollisista liikkumis paikoista
-            ableToMoves = _chessViewModel.ReturnPossibleMovement(color, pieceLocation, piece, whitePiecesInfo, blackPiecesInfo);
+            ableToMoves = _chessViewModel.ReturnPossibleMovement(color, pieceLocation, piece, whitePiecesInfo, blackPiecesInfo, hasMoved);
             ableToEat = _chessViewModel.ReturnPossibleEatingPieces();
             ableToSwitch = _chessViewModel.ReturnPossibleSwitchingKing();
 

@@ -30,10 +30,10 @@ namespace Chess.ViewModel
             
         }
 
-        public List<String> ReturnPossibleMovement(string color, string pieceLocation, string piece, List<Piece> whitePieces, List<Piece> blackPieces)
+        public List<String> ReturnPossibleMovement(string color, string pieceLocation, string piece, List<Piece> whitePieces, List<Piece> blackPieces, string hasMoved)
         {
             List<String> result = new List<String>();
-            result = _logic.GetPossibleMovement(color, pieceLocation, piece, whitePieces, blackPieces);
+            result = _logic.GetPossibleMovement(color, pieceLocation, piece, whitePieces, blackPieces, hasMoved);
 
             return result;
         }

@@ -64,15 +64,10 @@ namespace Chess.View
 
                     if (!blackMoveChanceHit && !whiteMoveChanceHit)
                     {
-                        ableToMove.Add(move);
+                        
                     }
                     else
                     {
-                        if (color == "White" && blackMoveChanceHit || color == "Black" && whiteMoveChanceHit)
-                        {
-                            ableToEat.Add($"{move}");
-                        }
-
                         con = false;
                     }
                 }
@@ -116,15 +111,10 @@ namespace Chess.View
 
                     if (!blackMoveChanceHit && !whiteMoveChanceHit)
                     {
-                        ableToMove.Add(move);
+
                     }
                     else
                     {
-                        if (color == "White" && blackMoveChanceHit || color == "Black" && whiteMoveChanceHit)
-                        {
-                            ableToEat.Add($"{move}");
-                        }
-
                         con = false;
                     }
                 }
@@ -509,7 +499,7 @@ namespace Chess.View
             return ableToMove;
         }
 
-        public List<string> King_Movement(string color, string pieceLocation)
+        public List<string> King_Movement(string color, string pieceLocation, string hasMoved)
         {
             int index = pieceLocation.IndexOfAny(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
             string chars = pieceLocation.Substring(0, index);
@@ -577,7 +567,10 @@ namespace Chess.View
                 con = GetPossibleEatingPiece(move, color, con);
             }
 
-            ableToSwitch = KingRook_Movementint(alphabetNum, num, color);
+            if (hasMoved == "HasNotMoved")
+            {
+                ableToSwitch = KingRook_Movementint(alphabetNum, num, color);
+            }
 
             return ableToMove;
         }
@@ -677,7 +670,7 @@ namespace Chess.View
             return ableToMove;
         }
 
-        public List<string> GetPossibleMovement(string color, string pieceLocation, string piece, List<Piece> whitePieces, List<Piece> blackPieces)
+        public List<string> GetPossibleMovement(string color, string pieceLocation, string piece, List<Piece> whitePieces, List<Piece> blackPieces, string hasMoved)
         {
             blackPiecesInfo = blackPieces;
             whitePiecesInfo = whitePieces;
@@ -701,7 +694,7 @@ namespace Chess.View
             }
             else if (piece == "King")
             {
-                ableToMoves = King_Movement(color, pieceLocation);
+                ableToMoves = King_Movement(color, pieceLocation, hasMoved);
             }
             else if (piece == "Queen")
             {
