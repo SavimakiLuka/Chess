@@ -244,7 +244,10 @@ namespace Chess.View
                 }
                 else if (num == 1)
                 {
-                    MessageBox.Show("Pääsit päätyyn onneksi olkoon!");
+                    ableToMove.Clear();
+                    ableToMove.Add("PawnChange");
+
+                    return ableToMove;
                 }
                 else
                 {
